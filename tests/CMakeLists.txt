@@ -8,7 +8,7 @@ yamail_find_library(dl)
 set(DEPENDENCIES
   gtest
   gmock
-#  recipient_parser
+  recipient_parser
   ${dl_LIBRARIES}
   ${RECIPIENT_PARSER_DEPENDENCY_LIBRARIES}
 )
