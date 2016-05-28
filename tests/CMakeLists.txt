@@ -1,24 +1,21 @@
-file(GLOB SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
+include_directories(${CMAKE_SOURCE_DIR}/src/)
+file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
+message(STATUS "Test sources: ${SOURCES}")
 
-include_directories(
-    ${GTEST_INCLUDE_DIR}
-    ${GMOCK_INCLUDE_DIR}
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".so")
+yamail_find_library(dl)
+
+set(DEPENDENCIES
+  gtest
+  gmock
+#  recipient_parser
+  ${dl_LIBRARIES}
+  ${RECIPIENT_PARSER_DEPENDENCY_LIBRARIES}
 )
 
-add_executable(${MODULE}-test EXCLUDE_FROM_ALL ${SOURCES} )
+if (NOT TARGET check)
+  add_custom_target(check COMMAND utest)
+  set( BUILD_TESTS 1 )
+endif()
 
-add_dependencies(${MODULE}-test googletest googlemock)
-
-find_package(Threads)
-
-target_link_libraries(${MODULE}-test
-    ${MODULE}
-    ${GTEST_LIBRARIES}
-    ${GMOCK_LIBRARIES}
-    ${CMAKE_THREAD_LIBS_INIT}
-)
-
-add_test(
-    NAME ${MODULE}_test
-    COMMAND ${MODULE}-test
-)
+yamail_add_test(utest "${SOURCES}" "${DEPENDENCIES}")
