@@ -1,24 +1,14 @@
 #include <recipient_parser/from_string/atoms.hpp>
 
 #include <recipient_parser/atoms.hpp>
-#include <recipient_parser/error_handler.hpp>
+#include <recipient_parser/grammar_from_rule.hpp>
 
 namespace rcpt_parser {
 
 std::string::const_iterator parse_dot_atom(const std::string& input, std::string& result) {
-    using Iterator = std::string::const_iterator;
-    using Skipper = ascii::space_type;
-
-    struct DotAtomParser : qi::grammar<Iterator, std::string(), Skipper> {
-        DotAtomParser() : DotAtomParser::base_type(start) {
-            start %= qi::eps > dot_atom > qi::eoi;
-            qi::on_error<qi::fail>(start, error(qi::_1, qi::_2, qi::_3, qi::_4));
-        }
-
-        DotAtom<Iterator, Skipper> dot_atom;
-        qi::rule<Iterator, std::string(), Skipper> start;
-        phx::function<ErrorHandler<Iterator>> const error;
-    } parser;
+    using StdDotAtom = DotAtom<std::string::const_iterator, ascii::space_type>;
+    GRAMMAR_FROM_RULE(StdDotAtom, DotAtomParser);
+    DotAtomParser parser;
 
     auto iter = input.begin();
     const auto end = input.end();
