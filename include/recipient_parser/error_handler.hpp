@@ -1,8 +1,9 @@
-#ifndef RECIPIENT_PARSER_INCLUDE_PARSER_HPP_
-#define RECIPIENT_PARSER_INCLUDE_PARSER_HPP_
+#ifndef RECIPIENT_PARSER_INCLUDE_ERROR_HANDLER_HPP_
+#define RECIPIENT_PARSER_INCLUDE_ERROR_HANDLER_HPP_
 
 #include <sstream>
-#include <stdexcept>
+
+#include "error.hpp"
 
 namespace rcpt_parser {
 
@@ -17,10 +18,10 @@ struct ErrorHandler {
             out << "expecting " << info << " here: "
                     << boost::iterator_range<Iterator>(where, end) << std::endl;
 
-            throw std::runtime_error(out.str());
+            throw ParseError(out.str());
         }
 };
 
 }
 
-#endif //RECIPIENT_PARSER_INCLUDE_PARSER_HPP_
+#endif //RECIPIENT_PARSER_INCLUDE_ERROR_HANDLER_HPP_

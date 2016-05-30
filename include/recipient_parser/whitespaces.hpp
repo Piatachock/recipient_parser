@@ -7,20 +7,17 @@ namespace rcpt_parser {
 
 template<typename Iterator, typename Skipper = ascii::space_type>
 struct FWS : qi::rule<Iterator, qi::unused_type, Skipper> {
-    using Base = qi::rule<Iterator, qi::unused_type, Skipper>;
     FWS() {
         this->name("folding whitespace");
-        static_cast<Base&>(*this) = qi::eps;
+        static_cast<typename FWS::this_type&>(*this) = qi::eps;
     }
 };
 
-
 template<typename Iterator, typename Skipper = ascii::space_type>
 struct CFWS : qi::rule<Iterator, qi::unused_type, Skipper> {
-    using Base = qi::rule<Iterator, qi::unused_type, Skipper>;
     CFWS() {
         this->name("commented folding whitespace");
-        static_cast<Base&>(*this) = qi::eps;
+        static_cast<typename CFWS::this_type&>(*this) = qi::eps;
     }
 };
 
