@@ -1,5 +1,5 @@
-#ifndef RECIPIENT_PARSER_SRC_PARSE_EMAIL_HPP_
-#define RECIPIENT_PARSER_SRC_PARSE_EMAIL_HPP_
+#ifndef RECIPIENT_PARSER_FROM_STRING_EMAIL_HPP_
+#define RECIPIENT_PARSER_FROM_STRING_EMAIL_HPP_
 
 #include <string>
 
@@ -11,4 +11,4 @@ std::string::const_iterator parse_email(const std::string& input, LoginDomain& r
 
 }
 
-#endif /* RECIPIENT_PARSER_SRC_PARSE_EMAIL_HPP_ */
+#endif /* RECIPIENT_PARSER_FROM_STRING_EMAIL_HPP_ */

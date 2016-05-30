@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <boost/algorithm/string/join.hpp>
 
-#include <recipient_parser/from_string/dot_atom.hpp>
+#include <recipient_parser/from_string/atoms.hpp>
 
 namespace {
 

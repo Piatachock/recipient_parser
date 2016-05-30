@@ -1,8 +1,6 @@
-#include <recipient_parser/from_string/dot_atom.hpp>
+#include <recipient_parser/from_string/atoms.hpp>
 
-#include <boost/phoenix/function/function.hpp>
-
-#include <recipient_parser/dot_atom.hpp>
+#include <recipient_parser/atoms.hpp>
 #include <recipient_parser/error_handler.hpp>
 
 namespace rcpt_parser {

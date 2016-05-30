@@ -1,7 +1,8 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_EMAIL_HPP_
 #define RECIPIENT_PARSER_INCLUDE_EMAIL_HPP_
 
-#include "dot_atom.hpp"
+#include "spirit.hpp"
+#include "atoms.hpp"
 #include "error_handler.hpp"
 #include "types/login_domain.hpp"
 
