@@ -5,13 +5,17 @@
 
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 
+namespace rcpt_parser {
+
 struct LoginDomain {
     std::string login;
     std::string domain;
 };
 
+}
+
 BOOST_FUSION_ADAPT_STRUCT(
-    LoginDomain,
+    rcpt_parser::LoginDomain,
     (std::string, login)
     (std::string, domain)
 );
