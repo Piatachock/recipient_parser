@@ -8,9 +8,8 @@ yamail_find_library(dl)
 set(DEPENDENCIES
   gtest
   gmock
-  recipient_parser
   ${dl_LIBRARIES}
-  ${RECIPIENT_PARSER_DEPENDENCY_LIBRARIES}
+  recipient_parser-from_string
 )
 
 if (NOT TARGET check)

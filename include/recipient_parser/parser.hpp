@@ -12,7 +12,7 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 
-#include <login_domain.hpp>
+#include <recipient_parser/types/login_domain.hpp>
 
 namespace spirit = boost::spirit;
 namespace qi = spirit::qi;

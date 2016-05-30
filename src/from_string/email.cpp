@@ -1,5 +1,5 @@
-#include "parse_email.hpp"
-#include <parser.hpp>
+#include <recipient_parser/from_string/email.hpp>
+#include <recipient_parser/parser.hpp>
 
 std::string::const_iterator parse_email(const std::string& input, LoginDomain& result) {
     static const EmailParser<std::string::const_iterator> parser;

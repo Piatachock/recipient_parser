@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <boost/algorithm/string/join.hpp>
 
-#include <parse_email.hpp>
+#include <recipient_parser/from_string/email.hpp>
 
 namespace {
 
