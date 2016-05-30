@@ -6,17 +6,16 @@
 namespace rcpt_parser {
 
 std::string::const_iterator parse_dot_atom(const std::string& input, std::string& result) {
-    using StdDotAtom = DotAtom<std::string::const_iterator, ascii::space_type>;
+    using StdDotAtom = DotAtom<std::string::const_iterator>;
     GRAMMAR_FROM_RULE(StdDotAtom, DotAtomParser);
     DotAtomParser parser;
 
     auto iter = input.begin();
     const auto end = input.end();
-    qi::phrase_parse(
+    qi::parse(
         iter,                          // Start Iterator
         end,                            // End Iterator
         parser,                         // The Parser
-        ascii::space,                   // The Skip-Parser
         result
     );
     return iter;

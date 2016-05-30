@@ -6,8 +6,8 @@
 
 namespace rcpt_parser {
 
-template<typename Iterator, typename Skipper = ascii::space_type>
-struct AText : qi::rule<Iterator, char(), Skipper> {
+template<typename Iterator>
+struct AText : qi::rule<Iterator, char()> {
     AText() {
         this->name("atext");
         static_cast<typename AText::this_type&>(*this) %=
@@ -17,18 +17,19 @@ struct AText : qi::rule<Iterator, char(), Skipper> {
     }
 };
 
-template<typename Iterator, typename Skipper = ascii::space_type>
-struct DotAtom : qi::rule<Iterator, std::string(), Skipper> {
+template<typename Iterator>
+struct DotAtom : qi::rule<Iterator, std::string()> {
     DotAtom() {
-        this->name("Word containing dots (neither first nor last symbol)");
-
+        dot_atom_text.name("dot-atom-text");
         dot_atom_text %= +atext > *(qi::char_('.') > +atext);
+
+        this->name("Word containing dots (neither first nor last symbol)");
         static_cast<typename DotAtom::this_type&>(*this) %=
                 qi::eps > -cfws > dot_atom_text > -cfws;
     }
-    CFWS<Iterator, Skipper> cfws;
-    AText<Iterator, Skipper> atext;
-    qi::rule<Iterator, std::string(), Skipper> dot_atom_text;
+    CFWS<Iterator> cfws;
+    AText<Iterator> atext;
+    qi::rule<Iterator, std::string()> dot_atom_text;
 };
 
 } // namespace rcpt_parser

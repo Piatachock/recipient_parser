@@ -8,11 +8,10 @@ std::string::const_iterator parse_email(const std::string& input, LoginDomain& r
 
     auto iter = input.begin();
     const auto end = input.end();
-    qi::phrase_parse(
+    qi::parse(
         iter,                          // Start Iterator
         end,                            // End Iterator
         parser,                         // The Parser
-        ascii::space,                   // The Skip-Parser
         result
     );
     return iter;

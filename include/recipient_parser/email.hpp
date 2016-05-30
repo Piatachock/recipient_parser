@@ -8,15 +8,15 @@
 
 namespace rcpt_parser {
 
-template<typename Iterator, typename Skipper = ascii::space_type>
-struct EmailParser : qi::grammar<Iterator, LoginDomain(), Skipper> {
+template<typename Iterator>
+struct EmailParser : qi::grammar<Iterator, LoginDomain()> {
     EmailParser() : EmailParser::base_type(start) {
         start.name("Login+domain");
         start %= local_part > "@" > domain;
         qi::on_error<qi::fail>(start, error(qi::_1, qi::_2, qi::_3, qi::_4));
     }
-    DotAtom<Iterator, Skipper> local_part, domain;
-    qi::rule<Iterator, LoginDomain(), Skipper> start;
+    DotAtom<Iterator> local_part, domain;
+    qi::rule<Iterator, LoginDomain()> start;
     phx::function<ErrorHandler<Iterator>> const error;
 };
 

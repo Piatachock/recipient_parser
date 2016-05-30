@@ -15,9 +15,10 @@
             > {                                                            \
         GrammarName() : GrammarName::base_type(rule) {                     \
             using namespace boost::spirit::qi::labels;                     \
+            rule.name(#GrammarName);                                       \
             boost::spirit::qi::on_error<boost::spirit::qi::fail>(          \
                rule, error(_1, _2, _3, _4)                                 \
-           );                                                              \
+            );                                                             \
         }                                                                  \
                                                                            \
         Rule rule;                                                         \

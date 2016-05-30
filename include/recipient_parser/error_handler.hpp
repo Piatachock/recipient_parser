@@ -15,8 +15,8 @@ struct ErrorHandler {
         void operator()(Iterator /*begin*/, Iterator end, Iterator where,
                 I const& info) const {
             std::stringstream out;
-            out << "expecting " << info << " here: "
-                    << boost::iterator_range<Iterator>(where, end) << std::endl;
+            out << "expecting " << info << " here: \""
+                    << boost::iterator_range<Iterator>(where, end) << "\"\n";
 
             throw ParseError(out.str());
         }
