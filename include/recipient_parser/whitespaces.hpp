@@ -9,7 +9,8 @@ template<typename Iterator>
 struct FWS : qi::rule<Iterator> {
     FWS() {
         this->name("folding whitespace");
-        static_cast<typename FWS::this_type&>(*this) = qi::eps;
+        static_cast<typename FWS::this_type&>(*this) = 
+                (*qi::blank >> qi::eol >> +qi::blank) | +qi::blank;
     }
 };
 

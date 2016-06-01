@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <boost/algorithm/string/join.hpp>
 
 #include <recipient_parser/from_string/atoms.hpp>
 #include <recipient_parser/error.hpp>
@@ -10,9 +9,6 @@ namespace {
 using namespace testing;
 using namespace rcpt_parser;
 
-std::ostream& operator <<(std::ostream& stream, const std::vector<std::string>& values) {
-    return stream << boost::join(values, "\n");
-}
 
 TEST(DotAtomTest, stops_on_first_word) {
     std::string input("first second");
