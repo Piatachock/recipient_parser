@@ -4,16 +4,17 @@
 #include <recipient_parser/from_string/whitespaces.hpp>
 #include <recipient_parser/error.hpp>
 
-#include <iostream>
+#include "debugging_test.hpp"
 
-#define BOOST_SPIRIT_DEBUG_OUT std::cout
+#include <iostream>
 
 namespace {
 
 using namespace testing;
 using namespace rcpt_parser;
 
-struct SuccessFWSTest: TestWithParam<std::string> {};
+using FWSTest = PrinterTest;
+struct SuccessFWSTest: PrinterTest, WithParamInterface<std::string> {};
 
 TEST_P(SuccessFWSTest, no_throw_on_parse) {
     const auto input = GetParam();
@@ -32,13 +33,13 @@ INSTANTIATE_TEST_CASE_P(no_throw_on_single_eol_then_blank,
         )
 );
 
-TEST(FWSTest, throw_on_ending_crlf) {
+TEST_F(FWSTest, throw_on_ending_crlf) {
     const auto input = std::string("  \r\n");
     const auto stopped_at = parse_fws(input);
     ASSERT_EQ(input.find('\r'), stopped_at - input.begin());
 }
 
-struct ThrowFWSTest: TestWithParam<std::string> {};
+struct ThrowFWSTest: PrinterTest, WithParamInterface<std::string> {};
 
 TEST_P(ThrowFWSTest, throw_on_parse) {
     const auto input = GetParam();

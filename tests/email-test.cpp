@@ -4,12 +4,16 @@
 
 #include <recipient_parser/from_string/email.hpp>
 
+#include "debugging_test.hpp"
+
 namespace {
 
 using namespace testing;
 using namespace rcpt_parser;
 
-TEST(EmailTest, basic_testcase) {
+using EmailTest = PrinterTest;
+
+TEST_F(EmailTest, basic_testcase) {
     std::string input("login@domain.ru");
 
     LoginDomain result;

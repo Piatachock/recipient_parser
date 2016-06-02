@@ -11,10 +11,7 @@ namespace {
 using namespace testing;
 using namespace rcpt_parser;
 
-class SuccessQPTest: public TestWithParam<std::pair<std::string, char>> {};
-//class SuccessQPTest:
-//        public PrinterTest
-//        public WithParamInterface<std::pair<std::string, char>> {};
+struct SuccessQPTest: PrinterTest, WithParamInterface<std::pair<std::string, char>> {};
 
 TEST_P(SuccessQPTest, no_throw_on_parse) {
     const auto input = GetParam().first;

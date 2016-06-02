@@ -7,9 +7,8 @@ namespace rcpt_parser {
 
 std::string::const_iterator parse_dot_atom(
         const std::string& input,
-        std::string& result,
-        bool do_debug) {
-    return detail::parse_template<DotAtom>("DotAtom", input, result, do_debug);
+        std::string& result) {
+    return detail::parse_template<DotAtom>("DotAtom", input, result);
 }
 
 } // namespace rcpt_parser

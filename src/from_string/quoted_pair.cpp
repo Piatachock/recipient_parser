@@ -7,9 +7,8 @@ namespace rcpt_parser {
 
 std::string::const_iterator parse_quoted_pair(
         const std::string& input,
-        char& result,
-        bool do_debug) {
-    return detail::parse_template<QuotedPair>("QuotedPair", input, result, do_debug);
+        char& result) {
+    return detail::parse_template<QuotedPair>("QuotedPair", input, result);
 }
 
 } // namespace rcpt_parser
