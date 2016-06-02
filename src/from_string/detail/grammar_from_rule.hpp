@@ -16,10 +16,9 @@ struct GrammarFromRule :
             typename boost::mpl::at_c<typename Rule::template_params, 2>::type,
             typename boost::mpl::at_c<typename Rule::template_params, 3>::type
         > {
-    GrammarFromRule(const std::string& name, bool do_debug = false)
+    GrammarFromRule(bool do_debug = false)
             : GrammarFromRule::base_type(rule) {
         using namespace boost::spirit::qi::labels;
-        rule.name(name);
         boost::spirit::qi::on_error<boost::spirit::qi::fail>(
            rule, error(_1, _2, _3, _4)
         );

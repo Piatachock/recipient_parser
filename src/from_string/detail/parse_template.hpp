@@ -9,13 +9,11 @@ namespace detail {
 using StrCIter = std::string::const_iterator;
 
 template<template <typename> class Rule>
-StrCIter parse_template(
-        const std::string& name,
-        const std::string& input) {
+StrCIter parse_template(const std::string& input) {
     using StringRule = Rule<StrCIter>;
     using StringGrammar = GrammarFromRule<StringRule>;
 
-    StringGrammar parser(name, true);
+    StringGrammar parser(true);
 
     auto iter = input.begin();
     if( !qi::parse(iter, input.end(), parser) ) {
@@ -28,13 +26,12 @@ StrCIter parse_template(
 
 template<template <typename> class Rule>
 StrCIter parse_template(
-        const std::string& name,
         const std::string& input,
         typename Rule<StrCIter>::attr_type& result) {
     using StringRule = Rule<StrCIter>;
     using StringGrammar = GrammarFromRule<StringRule>;
 
-    StringGrammar parser(name, true);
+    StringGrammar parser(true);
 
     auto iter = input.begin();
     if( !qi::parse(iter, input.end(), parser, result) ) {
