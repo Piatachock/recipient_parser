@@ -14,12 +14,16 @@ struct FWS : qi::rule<Iterator> {
     }
 };
 
+
+// Non-RFC, no comments so far
 template<typename Iterator>
 struct CFWS : qi::rule<Iterator> {
     CFWS() {
         this->name("commented folding whitespace");
-        static_cast<typename CFWS::this_type&>(*this) = qi::eps;
+        static_cast<typename CFWS::this_type&>(*this) = fws;
     }
+
+    FWS<Iterator> fws;
 };
 
 } // namespace rcpt_parser

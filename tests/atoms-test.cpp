@@ -14,25 +14,28 @@ using namespace rcpt_parser;
 using DotAtomTest = PrinterTest;
 
 TEST_F(DotAtomTest, stops_on_first_word) {
-    std::string input("first second");
+    const std::string input("first second");
     std::string result;
 
     auto stopped_at = parse_dot_atom(input, result);
+    auto unparsed = std::string(stopped_at, input.end());
 
-    ASSERT_TRUE(*stopped_at == ' ');
+    ASSERT_EQ(unparsed, "second");
     ASSERT_EQ(result, "first");
 }
 
 TEST_F(DotAtomTest, stops_on_quote) {
-    std::string input("foo\"bar");
+    const std::string input("foo\"bar");
     std::string result;
 
     auto stopped_at = parse_dot_atom(input, result);
-    ASSERT_EQ(*stopped_at, '"');
+    auto unparsed = std::string(stopped_at, input.end());
+
+    ASSERT_EQ(unparsed, "\"bar");
 }
 
 TEST_F(DotAtomTest, parse_specials) {
-    std::string input("!#$%&'*+|=?^_`{|}~-");
+    const std::string input("!#$%&'*+|=?^_`{|}~-");
     std::string result;
 
     auto stopped_at = parse_dot_atom(input, result);
@@ -41,8 +44,18 @@ TEST_F(DotAtomTest, parse_specials) {
     ASSERT_EQ(result, input);
 }
 
+TEST_F(DotAtomTest, trim_word) {
+    const std::string input(" word\t");
+    std::string result;
+
+    auto stopped_at = parse_dot_atom(input, result);
+
+    ASSERT_TRUE(stopped_at == input.end());
+    ASSERT_EQ(result, "word");
+}
+
 TEST_F(DotAtomTest, parse_dot_in_word) {
-    std::string input("str.ing");
+    const std::string input("str.ing");
     std::string result;
 
     parse_dot_atom(input, result);
@@ -51,14 +64,14 @@ TEST_F(DotAtomTest, parse_dot_in_word) {
 }
 
 TEST_F(DotAtomTest, dot_as_first_char_throws) {
-    std::string input(".string");
+    const std::string input(".string");
     std::string result;
 
     ASSERT_THROW(parse_dot_atom(input, result), ParseError);
 }
 
 TEST_F(DotAtomTest, dot_as_last_char_throws) {
-    std::string input("string.");
+    const std::string input("string.");
     std::string result;
 
     ASSERT_THROW(parse_dot_atom(input, result), ParseError);
