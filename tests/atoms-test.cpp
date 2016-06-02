@@ -40,7 +40,7 @@ TEST_F(DotAtomTest, parse_specials) {
 
     auto stopped_at = parse_dot_atom(input, result);
 
-    ASSERT_TRUE(stopped_at == input.end());
+    ASSERT_EQ(stopped_at - input.begin(), input.size());
     ASSERT_EQ(result, input);
 }
 
@@ -50,7 +50,7 @@ TEST_F(DotAtomTest, trim_word) {
 
     auto stopped_at = parse_dot_atom(input, result);
 
-    ASSERT_TRUE(stopped_at == input.end());
+    ASSERT_EQ(stopped_at - input.begin(), input.size());
     ASSERT_EQ(result, "word");
 }
 
