@@ -7,5 +7,6 @@ install_manifest.txt
 tests/utest
 tests/CTestTestfile.cmake
 tests/test_detail.xml
+test_detail.xml
 
 *.a

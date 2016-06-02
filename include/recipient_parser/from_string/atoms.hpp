@@ -5,7 +5,10 @@
 
 namespace rcpt_parser {
 
-std::string::const_iterator parse_dot_atom(const std::string& input, std::string& result);
+std::string::const_iterator parse_dot_atom(
+        const std::string& input,
+        std::string& result,
+        bool do_debug = false);
 
 }
 
