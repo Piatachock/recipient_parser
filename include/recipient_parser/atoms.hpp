@@ -32,6 +32,14 @@ struct DotAtom : qi::rule<Iterator, std::string()> {
     qi::rule<Iterator, std::string()> dot_atom_text;
 };
 
+template<typename Iterator>
+void debug(DotAtom<Iterator>& dot_atom) {
+    debug(static_cast<typename DotAtom<Iterator>::this_type&>(dot_atom));
+    debug(dot_atom.cfws);
+    debug(dot_atom.atext);
+    debug(dot_atom.dot_atom_text);
+}
+
 } // namespace rcpt_parser
 
 #endif

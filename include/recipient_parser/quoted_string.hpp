@@ -11,7 +11,7 @@ template<typename Iterator>
 struct QuotedString : qi::rule<Iterator, std::string()> {
     QuotedString() {
         qtext.name("qtext");
-        qtext %= qi::char_("\x21-\x7e") - '\'' - '"';
+        qtext %= qi::char_("\x21-\x7e") - '\\' - '"';
 
         qcontent.name("qcontent");
         qcontent %= qtext | qp;
@@ -30,6 +30,17 @@ struct QuotedString : qi::rule<Iterator, std::string()> {
     QuotedPair<Iterator> qp;
     qi::rule<Iterator, char()> qtext, qcontent;
 };
+
+template<typename Iterator>
+void debug(QuotedString<Iterator>& qs) {
+    debug(static_cast<typename QuotedString<Iterator>::this_type&>(qs));
+    debug(qs.cfws);
+    debug(qs.fws);
+    debug(qs.end_fws);
+    debug(qs.qp);
+    debug(qs.qtext);
+    debug(qs.qcontent);
+}
 
 } // namespace rcpt_parser
 

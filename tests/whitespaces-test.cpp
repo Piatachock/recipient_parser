@@ -37,7 +37,7 @@ INSTANTIATE_TEST_CASE_P(no_throw_on_single_eol_then_blank,
             std::make_pair("\n ", " ")              // only LF (non-RFC but probably useful)
         )
 );
-/*
+
 TEST_F(FWSTest, throw_on_ending_crlf) {
     const auto input = std::string("  \r\n");
     std::string result;
@@ -70,5 +70,5 @@ INSTANTIATE_TEST_CASE_P(throw_on_just_crlf,
             "\n"     // just CRLF
         )
 );
-*/
+
 }
