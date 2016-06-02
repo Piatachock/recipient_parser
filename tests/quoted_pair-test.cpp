@@ -4,12 +4,17 @@
 #include <recipient_parser/from_string/quoted_pair.hpp>
 #include <recipient_parser/error.hpp>
 
+#include "debugging_test.hpp"
+
 namespace {
 
 using namespace testing;
 using namespace rcpt_parser;
 
-struct SuccessQPTest: TestWithParam<std::pair<std::string, char>> {};
+class SuccessQPTest: public TestWithParam<std::pair<std::string, char>> {};
+//class SuccessQPTest:
+//        public PrinterTest
+//        public WithParamInterface<std::pair<std::string, char>> {};
 
 TEST_P(SuccessQPTest, no_throw_on_parse) {
     const auto input = GetParam().first;

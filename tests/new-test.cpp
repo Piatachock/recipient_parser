@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <iostream>
+
 int main(int argc, char *argv[]) {
     ::testing::FLAGS_gtest_output = "xml";
     ::testing::FLAGS_gtest_death_test_style = "threadsafe";
