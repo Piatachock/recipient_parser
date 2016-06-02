@@ -8,9 +8,16 @@
 namespace rcpt_parser {
 
 struct LoginDomain {
-    std::string login;
-    std::string domain;
+    std::string login, domain;
+
+    LoginDomain() = default;
+    LoginDomain(std::string login, std::string domain)
+            : login(login), domain(domain) {}
 };
+
+inline bool operator==(const LoginDomain& lhs, const LoginDomain& rhs) {
+    return lhs.login == rhs.login && lhs.domain == rhs.domain;
+}
 
 }
 

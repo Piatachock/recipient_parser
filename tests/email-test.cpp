@@ -11,17 +11,12 @@ namespace {
 using namespace testing;
 using namespace rcpt_parser;
 
-using EmailTest = PrinterTest;
+struct EmailTest : ParserTest<LoginDomain> {};
+using Params = ParserParams<LoginDomain>;
 
 TEST_F(EmailTest, basic_testcase) {
-    std::string input("login@domain.ru");
-
-    LoginDomain result;
-
-    auto stopped_at = parse_email(input, result);
-
-    ASSERT_TRUE(stopped_at == input.end());
-    ASSERT_EQ(result.login, "login");
-    ASSERT_EQ(result.domain, "domain.ru");
+    auto params = Params("login@domain.ru", LoginDomain("login", "domain.ru"));
+    this->test_parser(&parse_email, params);
 }
+
 }
