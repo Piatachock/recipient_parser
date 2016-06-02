@@ -6,6 +6,8 @@
 
 #include <recipient_parser/error.hpp>
 
+#include <type_traits>
+
 namespace rcpt_parser {
 
 class PrinterTest : public ::testing::Test {
@@ -40,10 +42,39 @@ struct ParserParams {
     Result result;
     ParserParams(std::string input, Result result, std::string unparsed = std::string())
             : input(input), unparsed(unparsed), result(result) {}
-    template<typename = decltype(Result(input))>
-    ParserParams(std::string input)
-            : input(input), result(input) {}
+
+    template<typename T>
+    ParserParams(
+            T&& input,
+            typename std::enable_if<
+                !std::is_convertible<T, ParserParams>::value
+            >::type* = 0,       //catches copy-constructor otherwise
+            typename std::enable_if<
+                std::is_convertible<T, Result>::value
+            >::type* = 0)       //if result(input) is possible
+        : input(input), result(input) {}
+
+    template<typename T>
+    ParserParams(
+            T&& input,
+            typename std::enable_if<
+                !std::is_convertible<T, ParserParams>::value
+            >::type* = 0,       //catches copy-constructor otherwise
+            typename std::enable_if<
+                !std::is_convertible<T, Result>::value
+            >::type* = 0)       //if result(input) is impossible
+        : input(input) {}
 };
+
+template<typename Result>
+inline std::ostream& operator<<(std::ostream& out, const ParserParams<Result>& params) {
+    out << "ParserParams("
+            <<     "input=\""    << params.input
+            << "\", result=\""   << params.result
+            << "\", unparsed=\"" << params.unparsed
+            << "\")";
+    return out;
+}
 
 using SParserParams = ParserParams<std::string>;
 
@@ -76,7 +107,7 @@ struct ParserTest : PrinterTest, ::testing::WithParamInterface<ParserParams<Resu
     template<typename Exception = ParseError, typename ParseFunc>
     void test_parser_throws(ParseFunc f, const Params& params) {
         const auto input = params.input;
-        std::string result;
+        Result result;
         ASSERT_THROW(f(input, result), Exception);
     }
 };

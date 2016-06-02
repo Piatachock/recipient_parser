@@ -2,6 +2,7 @@
 #define RECIPIENT_PARSER_SRC_LOGIN_DOMAIN_HPP_
 
 #include <string>
+#include <ostream>
 
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 
@@ -17,6 +18,11 @@ struct LoginDomain {
 
 inline bool operator==(const LoginDomain& lhs, const LoginDomain& rhs) {
     return lhs.login == rhs.login && lhs.domain == rhs.domain;
+}
+
+inline std::ostream& operator<<(std::ostream& out, const LoginDomain& email) {
+    out << "LoginDomain(\"" << email.login << "\", \"" << email.domain << "\")";
+    return out;
 }
 
 }

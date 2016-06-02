@@ -4,7 +4,8 @@
 namespace rcpt_parser {
 
 std::string::const_iterator parse_email(const std::string& input, LoginDomain& result) {
-    static const EmailParser<std::string::const_iterator> parser;
+    EmailParser<std::string::const_iterator> parser;
+    debug(parser);
 
     auto iter = input.begin();
     const auto end = input.end();
