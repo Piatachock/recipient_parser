@@ -70,11 +70,15 @@ TEST_F(DotAtomTest, dot_as_first_char_throws) {
     ASSERT_THROW(parse_dot_atom(input, result), ParseError);
 }
 
-TEST_F(DotAtomTest, dot_as_last_char_throws) {
+TEST_F(DotAtomTest, exclude_dot_as_last_char) {
     const std::string input("string.");
     std::string result;
 
-    ASSERT_THROW(parse_dot_atom(input, result), ParseError);
+    auto stopped_at = parse_dot_atom(input, result);
+    auto unparsed = std::string(stopped_at, input.end());
+
+    ASSERT_EQ(unparsed, ".");
+    ASSERT_EQ(result, "string");
 }
 
 }

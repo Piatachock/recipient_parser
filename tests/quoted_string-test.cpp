@@ -31,13 +31,13 @@ TEST_F(QuotedStringTest, trims_cfws) {
     ASSERT_EQ(result, "abc");
 }
 
-TEST_F(QuotedStringTest, trims_ineer_fws) {
-    const std::string input("\"  abc \"");
+TEST_F(QuotedStringTest, count_wsp_in_inner_fws) {
+    const std::string input("\" \r\n abc \"");
     std::string result;
 
     auto stopped_at = parse_quoted_string(input, result);
     ASSERT_EQ(stopped_at - input.begin(), input.size());
-    ASSERT_EQ(result, "abc");
+    ASSERT_EQ(result, "  abc ");
 }
 
 }

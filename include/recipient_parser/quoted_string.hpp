@@ -18,10 +18,15 @@ struct QuotedString : qi::rule<Iterator, std::string()> {
 
         this->name("quoted-string");
         static_cast<typename QuotedString::this_type&>(*this) %=
-                -cfws >> qi::lit('"') >> *(-fws >> qcontent) >> -fws >> qi::lit('"') >> -cfws;
+                -qi::omit[cfws]
+              >> qi::lit('"')
+              >> *qi::hold[-fws >> qcontent]
+              >> -end_fws
+              >> qi::lit('"')
+              >> -qi::omit[cfws];
     }
     CFWS<Iterator> cfws;
-    FWS<Iterator> fws;
+    FWS<Iterator> fws, end_fws;
     QuotedPair<Iterator> qp;
     qi::rule<Iterator, char()> qtext, qcontent;
 };

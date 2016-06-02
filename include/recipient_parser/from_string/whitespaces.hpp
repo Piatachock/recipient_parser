@@ -5,8 +5,8 @@
 
 namespace rcpt_parser {
 
-std::string::const_iterator parse_fws(const std::string& input);
-std::string::const_iterator parse_cfws(const std::string& input);
+std::string::const_iterator parse_fws(const std::string& input, std::string& result);
+std::string::const_iterator parse_cfws(const std::string& input, std::string& result);
 
 }
 

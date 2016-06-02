@@ -21,11 +21,11 @@ template<typename Iterator>
 struct DotAtom : qi::rule<Iterator, std::string()> {
     DotAtom() {
         dot_atom_text.name("dot-atom-text");
-        dot_atom_text %= +atext > *(qi::char_('.') > +atext);
+        dot_atom_text %= +atext >> *qi::hold[qi::char_('.') >> +atext];
 
         this->name("dot-atom (trimmed word with dots, except first and last symbol)");
         static_cast<typename DotAtom::this_type&>(*this) %=
-                -cfws >> dot_atom_text >> -cfws;
+                -qi::omit[cfws] >> dot_atom_text >> -qi::omit[cfws];
     }
     CFWS<Iterator> cfws;
     AText<Iterator> atext;

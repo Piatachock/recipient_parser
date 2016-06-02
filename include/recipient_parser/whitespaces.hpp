@@ -6,21 +6,21 @@
 namespace rcpt_parser {
 
 template<typename Iterator>
-struct FWS : qi::rule<Iterator> {
+struct FWS : qi::rule<Iterator, std::string()> {
     FWS() {
         this->name("fws (folding whitespace)");
-        static_cast<typename FWS::this_type&>(*this) = 
-                (*qi::blank >> qi::eol >> +qi::blank) | +qi::blank;
+        static_cast<typename FWS::this_type&>(*this) %=
+                qi::hold[*qi::blank >> qi::omit[qi::eol] >> +qi::blank] | +qi::blank;
     }
 };
 
 
 // Non-RFC, no comments so far
 template<typename Iterator>
-struct CFWS : qi::rule<Iterator> {
+struct CFWS : qi::rule<Iterator, std::string()> {
     CFWS() {
         this->name("cwfs (commented folding whitespace)");
-        static_cast<typename CFWS::this_type&>(*this) = fws;
+        static_cast<typename CFWS::this_type&>(*this) %= fws;
     }
 
     FWS<Iterator> fws;

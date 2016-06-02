@@ -6,13 +6,15 @@
 namespace rcpt_parser {
 
 std::string::const_iterator parse_fws(
-        const std::string& input) {
-    return detail::parse_template<FWS>(input);
+        const std::string& input,
+        std::string& result) {
+    return detail::parse_template<FWS>(input, result);
 }
 
 std::string::const_iterator parse_cfws(
-        const std::string& input) {
-    return detail::parse_template<CFWS>(input);
+        const std::string& input,
+        std::string& result) {
+    return detail::parse_template<CFWS>(input, result);
 }
 
 } // namespace rcpt_parser
