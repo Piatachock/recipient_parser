@@ -4,67 +4,57 @@
 #include <recipient_parser/from_string/whitespaces.hpp>
 #include <recipient_parser/error.hpp>
 
-#include "debugging_test.hpp"
-
-#include <iostream>
+#include "common.hpp"
 
 namespace {
 
 using namespace testing;
 using namespace rcpt_parser;
 
-using FWSTest = PrinterTest;
-struct SuccessFWSTest
-        : PrinterTest,
-          WithParamInterface<std::pair<std::string, std::string>> {};
+struct SuccessFWSTest : SParserTest {};
 
-TEST_P(SuccessFWSTest, no_throw_on_parse) {
-    const auto input = GetParam().first;
-    std::string result;
-
-    const auto stopped_at = parse_fws(input, result);
-    ASSERT_EQ(stopped_at - input.begin(), input.size());
-    ASSERT_EQ(result, GetParam().second);
+TEST_P(SuccessFWSTest, no_throw) {
+    this->test_parser(&parse_fws);
 }
 
-INSTANTIATE_TEST_CASE_P(no_throw_on_single_eol_then_blank,
+INSTANTIATE_TEST_CASE_P(full_consume_full_result,
         SuccessFWSTest, ::testing::Values(
-            std::make_pair(" \t \r\n ", " \t  "),   // whitespaces and tabs before CRLF
-            std::make_pair("\r\n \t\t ", " \t\t "), // whitespaces and tabs after CRLF
-            std::make_pair(" ", " "),               // only whitespace
-            std::make_pair("\t", "\t"),             // only tab
-            std::make_pair("\r ", " "),             // only CR (non-RFC but probably useful)
-            std::make_pair("\n ", " ")              // only LF (non-RFC but probably useful)
+            " ",     // only whitespace
+            "\t"     // only tab
         )
 );
 
-TEST_F(FWSTest, throw_on_ending_crlf) {
-    const auto input = std::string("  \r\n");
-    std::string result;
+INSTANTIATE_TEST_CASE_P(full_consume_remove_crlf,
+        SuccessFWSTest, ::testing::Values(
+            SParserParams{" \r\n\t", " \t"},    // spaces and tabs before CRLF
+            SParserParams{"\r\n \t", " \t"},    // spaces and tabs around CRLF
+            SParserParams{"\r "    , " "},      // only CR (non-RFC but probably useful)
+            SParserParams{"\n "    , " "}       // only LF (non-RFC but probably useful)
+        )
+);
 
-    const auto stopped_at = parse_fws(input, result);
-    ASSERT_EQ(input.find('\r'), stopped_at - input.begin());
+INSTANTIATE_TEST_CASE_P(partial_consume,
+        SuccessFWSTest, ::testing::Values(
+            SParserParams{" \r\n"     , " ", "\r\n" },  // stops on trailing CRLF
+            SParserParams{"\r\n \r\n ", " ", "\r\n "}   // stops on second CRLF
+        )
+);
 
+struct FailFWSTest: SParserTest {};
+
+TEST_P(FailFWSTest, throws) {
+    this->test_parser_throws(&parse_fws);
 }
 
-struct ThrowFWSTest: PrinterTest, WithParamInterface<std::string> {};
-
-TEST_P(ThrowFWSTest, throw_on_parse) {
-    const auto input = GetParam();
-    std::string result;
-
-    ASSERT_THROW(parse_fws(input, result), ParseError);
-}
-
-INSTANTIATE_TEST_CASE_P(throw_on_two_crlf,
-        ThrowFWSTest, ::testing::Values(
+INSTANTIATE_TEST_CASE_P(two_crlf,
+        FailFWSTest, ::testing::Values(
             "\r\n\r\n ",       // nothing in between CRLF
             "\n\n "            // nothing in between LF+LF
         )
 );
 
-INSTANTIATE_TEST_CASE_P(throw_on_just_crlf,
-        ThrowFWSTest, ::testing::Values(
+INSTANTIATE_TEST_CASE_P(crlf_only,
+        FailFWSTest, ::testing::Values(
             "\r\n",  // just CRLF
             "\r",    // just CRLF
             "\n"     // just CRLF

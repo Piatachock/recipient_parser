@@ -4,7 +4,7 @@
 
 #include <recipient_parser/from_string/email.hpp>
 
-#include "debugging_test.hpp"
+#include "common.hpp"
 
 namespace {
 

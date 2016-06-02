@@ -4,30 +4,28 @@
 #include <recipient_parser/from_string/quoted_pair.hpp>
 #include <recipient_parser/error.hpp>
 
-#include "debugging_test.hpp"
+#include "common.hpp"
 
 namespace {
 
 using namespace testing;
 using namespace rcpt_parser;
 
-struct SuccessQPTest: PrinterTest, WithParamInterface<std::pair<std::string, char>> {};
+struct SuccessQPTest : ParserTest<char> {};
+using CParserParams = ParserParams<char>;
+
 
 TEST_P(SuccessQPTest, no_throw_on_parse) {
-    const auto input = GetParam().first;
-    char result;
-    const auto stopped_at = parse_quoted_pair(input, result);
-    ASSERT_EQ(input.size(), stopped_at - input.begin());
-    ASSERT_EQ(GetParam().second, result);
+    this->test_parser(&parse_quoted_pair);
 }
 
-INSTANTIATE_TEST_CASE_P(no_throw_on_single_eol_then_blank,
+INSTANTIATE_TEST_CASE_P(strip_leading_backslash,
         SuccessQPTest, ::testing::Values(
-            std::make_pair("\\0", '0'),    // Number
-            std::make_pair("\\z", 'z'),    // Letter
-            std::make_pair("\\\\", '\\'),  // backslash
-            std::make_pair("\\\"", '"'),   // dquote
-            std::make_pair("\\ ", ' ')     // space
+            CParserParams{"\\0" , '0' },  // Number
+            CParserParams{"\\z" , 'z' },  // Letter
+            CParserParams{"\\\\", '\\'},  // backslash
+            CParserParams{"\\\"", '"' },  // dquote
+            CParserParams{"\\ " , ' ' }   // space
         )
 );
 

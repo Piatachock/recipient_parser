@@ -18,6 +18,24 @@ struct AText : qi::rule<Iterator, char()> {
 };
 
 template<typename Iterator>
+struct Atom : qi::rule<Iterator, char()> {
+    Atom() {
+        this->name("atom");
+        static_cast<typename Atom::this_type&>(*this) %=
+                -qi::omit[cfws] >> +atext >> -qi::omit[cfws];
+    }
+    CFWS<Iterator> cfws;
+    AText<Iterator> atext;
+};
+
+template<typename Iterator>
+void debug(Atom<Iterator>& atom) {
+    debug(static_cast<typename Atom<Iterator>::this_type&>(atom));
+    debug(atom.cfws);
+    debug(atom.atext);
+}
+
+template<typename Iterator>
 struct DotAtom : qi::rule<Iterator, std::string()> {
     DotAtom() {
         dot_atom_text.name("dot-atom-text");
