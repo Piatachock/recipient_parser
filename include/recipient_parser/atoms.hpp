@@ -23,9 +23,9 @@ struct DotAtom : qi::rule<Iterator, std::string()> {
         dot_atom_text.name("dot-atom-text");
         dot_atom_text %= +atext > *(qi::char_('.') > +atext);
 
-        this->name("Word containing dots (neither first nor last symbol)");
+        this->name("dot-atom (trimmed word with dots, except first and last symbol)");
         static_cast<typename DotAtom::this_type&>(*this) %=
-                qi::eps > -cfws > dot_atom_text > -cfws;
+                -cfws >> dot_atom_text >> -cfws;
     }
     CFWS<Iterator> cfws;
     AText<Iterator> atext;

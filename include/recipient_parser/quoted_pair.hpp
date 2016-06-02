@@ -8,7 +8,7 @@ namespace rcpt_parser {
 template<typename Iterator>
 struct QuotedPair : qi::rule<Iterator, char()> {
     QuotedPair() {
-        this->name("Quoted pair");
+        this->name("quoted-pair");
         static_cast<typename QuotedPair::this_type&>(*this) %=
                 qi::lit('\\') >> (qi::char_("\x21-\x7e") | qi::blank);
     }
