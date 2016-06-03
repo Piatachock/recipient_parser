@@ -1,4 +1,4 @@
-#include <recipient_parser/quoted_string.hpp>
+#include <recipient_parser/rules/quoted_string.hpp>
 
 #include "quoted_string.hpp"
 #include "detail/parse_template.hpp"

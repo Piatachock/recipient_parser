@@ -1,7 +1,8 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_QUOTED_STRING_HPP_
 #define RECIPIENT_PARSER_INCLUDE_QUOTED_STRING_HPP_
 
-#include "spirit.hpp"
+#include "../detail/spirit.hpp"
+
 #include "quoted_pair.hpp"
 #include "whitespaces.hpp"
 

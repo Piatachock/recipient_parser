@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-#include "error.hpp"
+#include "../error.hpp"
 
 namespace rcpt_parser {
 

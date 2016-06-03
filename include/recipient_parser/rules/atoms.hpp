@@ -1,7 +1,8 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_ATOMS_HPP_
 #define RECIPIENT_PARSER_INCLUDE_ATOMS_HPP_
 
-#include "spirit.hpp"
+#include "../detail/spirit.hpp"
+
 #include "whitespaces.hpp"
 
 namespace rcpt_parser {

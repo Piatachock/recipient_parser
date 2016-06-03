@@ -1,8 +1,8 @@
 #ifndef RECIPIENT_PARSER_SRC_FROM_STRING_DETAIL_GRAMMAR_FROM_RULE_HPP_
 #define RECIPIENT_PARSER_SRC_FROM_STRING_DETAIL_GRAMMAR_FROM_RULE_HPP_
 
-#include <recipient_parser/spirit.hpp>
-#include <recipient_parser/error_handler.hpp>
+#include <recipient_parser/detail/spirit.hpp>
+#include <recipient_parser/detail/error_handler.hpp>
 
 namespace rcpt_parser {
 namespace detail {

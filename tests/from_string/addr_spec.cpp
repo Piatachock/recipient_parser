@@ -1,4 +1,4 @@
-#include <recipient_parser/addr_spec.hpp>
+#include <recipient_parser/rules/addr_spec.hpp>
 
 #include "addr_spec.hpp"
 #include "detail/parse_template.hpp"

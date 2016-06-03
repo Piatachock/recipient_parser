@@ -1,7 +1,7 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_WHITESPACES_HPP_
 #define RECIPIENT_PARSER_INCLUDE_WHITESPACES_HPP_
 
-#include "spirit.hpp"
+#include "../detail/spirit.hpp"
 
 namespace rcpt_parser {
 

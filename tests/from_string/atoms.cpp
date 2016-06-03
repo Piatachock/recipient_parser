@@ -1,4 +1,4 @@
-#include <recipient_parser/atoms.hpp>
+#include <recipient_parser/rules/atoms.hpp>
 
 #include "atoms.hpp"
 #include "detail/parse_template.hpp"

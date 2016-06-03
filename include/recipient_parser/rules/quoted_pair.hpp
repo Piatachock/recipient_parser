@@ -1,7 +1,7 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_QUOTED_PAIR_HPP_
 #define RECIPIENT_PARSER_INCLUDE_QUOTED_PAIR_HPP_
 
-#include "spirit.hpp"
+#include "../detail/spirit.hpp"
 
 namespace rcpt_parser {
 

@@ -1,12 +1,15 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_EMAIL_HPP_
 #define RECIPIENT_PARSER_INCLUDE_EMAIL_HPP_
 
-#include "spirit.hpp"
-#include "error_handler.hpp"
+#include "../types/login_domain.hpp"
+
+#include "../detail/spirit.hpp"
+#include "../detail/error_handler.hpp"
+
 #include "atoms.hpp"
 #include "whitespaces.hpp"
 #include "quoted_string.hpp"
-#include "types/login_domain.hpp"
+
 
 namespace rcpt_parser {
 
