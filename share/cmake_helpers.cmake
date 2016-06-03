@@ -88,16 +88,3 @@ CMAKE_CXX_FLAGS_${UPPED_BUILD_TYPE} = ${CMAKE_CXX_FLAGS_${UPPED_BUILD_TYPE}}
 CMAKE_C_FLAGS_${UPPED_BUILD_TYPE}   = ${CMAKE_C_FLAGS_${UPPED_BUILD_TYPE}}
 ")
 endfunction()
-
-
-macro(cmake_include_directories)
-    set(SYSTEM_DIR "include/system")
-    foreach(TMP_PATH ${ARGN})
-        string(FIND ${TMP_PATH} ${SYSTEM_DIR} SYSTEM_DIR_FOUND)
-        if (${SYSTEM_DIR_FOUND} EQUAL -1)
-            include_directories(${TMP_PATH})
-        else()
-            include_directories(SYSTEM ${TMP_PATH})
-        endif()
-    endforeach(TMP_PATH)
-endmacro()

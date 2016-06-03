@@ -10,9 +10,11 @@ cmake_configuration_message()
 
 find_recipient_parser_dependencies()
 
-cmake_include_directories(
+include_directories(
   ${PROJECT_SOURCE_DIR}/include
-  "${RECIPIENT_PARSER_DEPENDENCY_INCLUDE_DIRS}"
+)
+include_directories(
+  SYSTEM "${RECIPIENT_PARSER_DEPENDENCY_INCLUDE_DIRS}"
 )
 
 add_subdirectory(share)
