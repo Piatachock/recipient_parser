@@ -32,12 +32,10 @@ endmacro()
 
 add_external_googletest("https://github.yandex-team.ru/elsid/googletest.git")
 
-set(CMAKE_FIND_LIBRARY_SUFFIXES ".so")
-yamail_find_library(dl)
 
 set(DEPENDENCIES
   gmock
-  ${dl_LIBRARIES}
+  dl
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
