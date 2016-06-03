@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <boost/algorithm/string/join.hpp>
 
-#include <recipient_parser/from_string/email.hpp>
+#include <recipient_parser/from_string/addr_spec.hpp>
 
 #include "common.hpp"
 
@@ -17,13 +17,13 @@ using SuccessEmailTest = ParserTest<LoginDomain>;
 
 TEST_F(SuccessEmailTest, basic_testcase) {
     auto params = Params("login@domain.ru", LoginDomain("login", "domain.ru"));
-    this->test_parser(&parse_email, params);
+    this->test_parser(&parse_addr_spec, params);
 }
 
 struct FailEmailTest : ParserTest<LoginDomain> {};
 
 TEST_P(FailEmailTest, throws) {
-    this->test_parser_throws(&parse_email);
+    this->test_parser_throws(&parse_addr_spec);
 }
 
 INSTANTIATE_TEST_CASE_P(bad_food,

@@ -68,23 +68,21 @@ void debug(Domain<Iterator>& dom) {
 }
 
 template<typename Iterator>
-struct EmailParser : qi::grammar<Iterator, LoginDomain()> {
-    EmailParser() : EmailParser::base_type(addr_spec) {
-        addr_spec.name("addr-spec");
-        addr_spec %= local_part > "@" > domain;
-        qi::on_error<qi::fail>(addr_spec, error(qi::_1, qi::_2, qi::_3, qi::_4));
+struct AddrSpec : qi::rule<Iterator, LoginDomain()> {
+    AddrSpec() {
+        this->name("addr-spec");
+        static_cast<typename AddrSpec::this_type&>(*this) %= local_part >> "@" >> domain;
     }
     Domain<Iterator> domain;
     LocalPart<Iterator> local_part;
-    qi::rule<Iterator, LoginDomain()> addr_spec;
     phx::function<ErrorHandler<Iterator>> const error;
 };
 
 template<typename Iterator>
-void debug(EmailParser<Iterator>& parser) {
-    debug(parser.domain);
-    debug(parser.local_part);
-    debug(parser.addr_spec);
+void debug(AddrSpec<Iterator>& addr_spec) {
+    debug(static_cast<typename AddrSpec<Iterator>::this_type&>(addr_spec));
+    debug(addr_spec.local_part);
+    debug(addr_spec.domain);
 }
 
 } // namespace rcpt_parser

@@ -7,7 +7,7 @@
 
 namespace rcpt_parser {
 
-std::string::const_iterator parse_email(const std::string& input, LoginDomain& result);
+std::string::const_iterator parse_addr_spec(const std::string& input, LoginDomain& result);
 
 }
 
