@@ -20,5 +20,4 @@ yamail_include_directories(
 
 add_subdirectory(share)
 add_subdirectory(include)
-add_subdirectory(src)
 add_subdirectory(tests)

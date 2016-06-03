@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <boost/algorithm/string/join.hpp>
 
-#include <recipient_parser/from_string/addr_spec.hpp>
+#include "from_string/addr_spec.hpp"
 
 #include "common.hpp"
 

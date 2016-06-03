@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <recipient_parser/from_string/quoted_pair.hpp>
 #include <recipient_parser/error.hpp>
 
+#include "from_string/quoted_pair.hpp"
 #include "common.hpp"
 
 namespace {

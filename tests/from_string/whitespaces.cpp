@@ -1,6 +1,6 @@
-#include <recipient_parser/from_string/whitespaces.hpp>
-
 #include <recipient_parser/whitespaces.hpp>
+
+#include "whitespaces.hpp"
 #include "detail/parse_template.hpp"
 
 namespace rcpt_parser {

@@ -1,6 +1,6 @@
-#include <recipient_parser/from_string/addr_spec.hpp>
 #include <recipient_parser/addr_spec.hpp>
 
+#include "addr_spec.hpp"
 #include "detail/parse_template.hpp"
 
 namespace rcpt_parser {

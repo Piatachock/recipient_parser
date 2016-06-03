@@ -1,6 +1,6 @@
-#include <recipient_parser/from_string/quoted_string.hpp>
-
 #include <recipient_parser/quoted_string.hpp>
+
+#include "quoted_string.hpp"
 #include "detail/parse_template.hpp"
 
 namespace rcpt_parser {
