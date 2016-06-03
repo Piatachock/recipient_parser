@@ -21,7 +21,6 @@ set(FLAGS
  "-Wpacked"
  "-Wredundant-decls"
  "-fexceptions"
- "-pthread"
  "-std=gnu++11"
  "-DBOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK"
 )
