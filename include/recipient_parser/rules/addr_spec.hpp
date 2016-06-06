@@ -1,10 +1,9 @@
-#ifndef RECIPIENT_PARSER_INCLUDE_EMAIL_HPP_
-#define RECIPIENT_PARSER_INCLUDE_EMAIL_HPP_
+#ifndef RECIPIENT_PARSER_INCLUDE_ADDR_SPEC_HPP_
+#define RECIPIENT_PARSER_INCLUDE_ADDR_SPEC_HPP_
 
 #include "../types/login_domain.hpp"
 
 #include "../detail/spirit.hpp"
-#include "../detail/error_handler.hpp"
 
 #include "atoms.hpp"
 #include "whitespaces.hpp"
@@ -70,14 +69,13 @@ void debug(Domain<Iterator>& dom) {
 }
 
 template<typename Iterator>
-struct AddrSpec : qi::rule<Iterator, LoginDomain()> {
+struct AddrSpec : qi::rule<Iterator, types::AddrSpec> {
     AddrSpec() {
         this->name("addr-spec");
         static_cast<typename AddrSpec::this_type&>(*this) %= local_part >> "@" >> domain;
     }
     Domain<Iterator> domain;
     LocalPart<Iterator> local_part;
-    phx::function<ErrorHandler<Iterator>> const error;
 };
 
 template<typename Iterator>

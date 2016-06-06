@@ -57,9 +57,9 @@ INSTANTIATE_TEST_CASE_P(bad_food,
 );
 
 
-using Params = ParserParams<LoginDomain>;
+using Params = ParserParams<types::AddrSpec>;
 
-struct SuccessAddrSpecTest : ParserTest<LoginDomain> {};
+struct SuccessAddrSpecTest : ParserTest<types::AddrSpec> {};
 
 TEST_P(SuccessAddrSpecTest, basic_testcase) {
     this->test_parser(&parse_addr_spec);
@@ -68,12 +68,12 @@ TEST_P(SuccessAddrSpecTest, basic_testcase) {
 
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessAddrSpecTest, ::testing::Values(
-            Params("login@domain.ru", LoginDomain("login", "domain.ru")),
-            Params("login@[127.0.0.1]", LoginDomain("login", "[127.0.0.1]"))
+            Params("login@domain.ru", types::AddrSpec("login", "domain.ru")),
+            Params("login@[127.0.0.1]", types::AddrSpec("login", "[127.0.0.1]"))
         )
 );
 
-struct FailAddrSpecTest : ParserTest<LoginDomain> {};
+struct FailAddrSpecTest : ParserTest<types::AddrSpec> {};
 
 TEST_P(FailAddrSpecTest, throws) {
     this->test_parser_throws(&parse_addr_spec);

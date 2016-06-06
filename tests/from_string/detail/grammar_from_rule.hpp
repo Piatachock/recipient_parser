@@ -20,7 +20,7 @@ struct GrammarFromRule :
             : GrammarFromRule::base_type(rule) {
         using namespace boost::spirit::qi::labels;
         boost::spirit::qi::on_error<boost::spirit::qi::fail>(
-           rule, error(_1, _2, _3, _4)
+            rule, error(_1, _2, _3, _4)
         );
         if (do_debug)
             debug(rule);

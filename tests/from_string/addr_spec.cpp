@@ -9,7 +9,9 @@ std::string::const_iterator parse_domain(const std::string& input, std::string& 
     return detail::parse_template<Domain>(input, result);
 }
 
-std::string::const_iterator parse_addr_spec(const std::string& input, LoginDomain& result) {
+using FusAddrSpec = boost::fusion::vector<std::string&, std::string&>;
+
+std::string::const_iterator parse_addr_spec(const std::string& input, types::AddrSpec& result) {
     return detail::parse_template<AddrSpec>(input, result);
 }
 
