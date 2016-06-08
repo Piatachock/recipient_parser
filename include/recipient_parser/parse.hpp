@@ -25,7 +25,11 @@ boost::optional<types::Address> parse_address(Iterator& iter, const Iterator& en
 template<typename Range>
 boost::optional<types::Address> parse_address(const Range& range) {
     auto iter = begin(range);
-    return parse_address(iter, end(range));
+    auto result = parse_address(iter, end(range));
+    if( iter != end(range) ) {
+        return {};
+    }
+    return std::move(result);
 }
 
 // Parse RFC-5322 "mailbox" entity. This parse function do not cover mailbox group case.
@@ -43,7 +47,11 @@ boost::optional<types::Mailbox> parse_mailbox(Iterator& iter, const Iterator& en
 template<typename Range>
 boost::optional<types::Mailbox> parse_mailbox(const Range& range) {
     auto iter = begin(range);
-    return parse_mailbox(iter, end(range));
+    auto result = parse_mailbox(iter, end(range));
+    if( iter != end(range) ) {
+        return {};
+    }
+    return std::move(result);
 }
 
 }

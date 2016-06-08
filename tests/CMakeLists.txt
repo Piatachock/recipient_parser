@@ -30,7 +30,7 @@ macro(add_external_googletest URL)
 endmacro()
 
 
-add_external_googletest("https://github.yandex-team.ru/elsid/googletest.git")
+add_external_googletest("https://github.yandex-team.ru/mail/googletest.git")
 
 
 set(DEPENDENCIES
