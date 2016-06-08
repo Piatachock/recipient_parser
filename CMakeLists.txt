@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 2.8.12)
 
-include(./share/find_recipient_parser_dependencies.cmake)
-include(./share/cmake_helpers.cmake)
-
 project(recipient_parser CXX)
-cmake_configuration_message()
+
+include(./share/find_recipient_parser_dependencies.cmake)
 
 find_recipient_parser_dependencies()
 
