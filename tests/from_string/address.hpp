@@ -3,7 +3,9 @@
 
 #include <string>
 
-#include <recipient_parser/types/login_domain.hpp>
+#include <recipient_parser/types/name_addr.hpp>
+#include <recipient_parser/types/mailbox_group.hpp>
+#include <recipient_parser/types/address.hpp>
 
 namespace rcpt_parser {
 

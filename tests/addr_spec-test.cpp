@@ -6,11 +6,21 @@
 
 #include "common.hpp"
 
+namespace rcpt_parser {
+namespace types {
+
+inline std::ostream& operator<<(std::ostream& out, const AddrSpec& email) {
+    out << "AddrSpec(\"" << email.login << "\", \"" << email.domain << "\")";
+    return out;
+}
+
+}
+}
+
 namespace {
 
 using namespace testing;
 using namespace rcpt_parser;
-
 
 struct SuccessDomainTest : SParserTest {};
 

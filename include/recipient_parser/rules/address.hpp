@@ -1,6 +1,10 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_ADDRESS_HPP_
 #define RECIPIENT_PARSER_INCLUDE_ADDRESS_HPP_
 
+#include "../types/name_addr.hpp"
+#include "../types/mailbox_group.hpp"
+#include "../types/address.hpp"
+
 #include "../detail/spirit.hpp"
 
 #include "addr_spec.hpp"

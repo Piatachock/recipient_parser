@@ -6,10 +6,46 @@
 
 #include "common.hpp"
 
+namespace rcpt_parser {
+namespace types {
+
+inline std::ostream& operator<<(std::ostream& out, const AddrSpec& email) {
+    out << "AddrSpec(\"" << email.login << "\", \"" << email.domain << "\")";
+    return out;
+}
+
+inline std::ostream& operator<<(std::ostream& out, const NameAddr& email) {
+    static const char* const join_delimiter("\", \"");
+    out << "NameAddr(\"";
+    if(email.display_name) {
+        out << *email.display_name << join_delimiter;
+    }
+    out << email.addr_spec << "\")";
+    return out;
+}
+
+inline std::ostream& operator<<(std::ostream& out, const MailboxGroup& group) {
+    static const char* const join_delimiter("\", \"");
+    out << "MailboxGroup(\"";
+    if(group.display_name) {
+        out << *group.display_name << join_delimiter;
+    }
+    out << "[";
+    for(const auto& name_addr : group.group) {
+        out << name_addr << ", ";
+    }
+    out << "]\")";
+    return out;
+}
+
+}
+}
+
+namespace {
+
 using namespace testing;
 using namespace rcpt_parser;
 
-namespace {
 
 using Params = ParserParams<types::NameAddr>;
 

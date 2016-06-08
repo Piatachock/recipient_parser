@@ -1,9 +1,9 @@
-#ifndef RECIPIENT_PARSER_FROM_STRING_EMAIL_HPP_
-#define RECIPIENT_PARSER_FROM_STRING_EMAIL_HPP_
+#ifndef RECIPIENT_PARSER_FROM_STRING_ADDR_SPEC_HPP_
+#define RECIPIENT_PARSER_FROM_STRING_ADDR_SPEC_HPP_
 
 #include <string>
 
-#include <recipient_parser/types/login_domain.hpp>
+#include <recipient_parser/types/addr_spec.hpp>
 
 namespace rcpt_parser {
 

@@ -1,7 +1,7 @@
 #ifndef RECIPIENT_PARSER_INCLUDE_ADDR_SPEC_HPP_
 #define RECIPIENT_PARSER_INCLUDE_ADDR_SPEC_HPP_
 
-#include "../types/login_domain.hpp"
+#include "../types/addr_spec.hpp"
 
 #include "../detail/spirit.hpp"
 
