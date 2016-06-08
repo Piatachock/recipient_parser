@@ -40,6 +40,19 @@ INSTANTIATE_TEST_CASE_P(full_consume,
         )
 );
 
+INSTANTIATE_TEST_CASE_P(partial_consume,
+        SuccessNameAddrTest, ::testing::Values(
+            Params(
+                    "displayname <login@domain.ru>",
+                    types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))
+            ),
+            Params(
+                    "displayname <login@domain.ru>",
+                    types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))
+            )
+        )
+);
+
 struct FailNameAddrTest : ParserTest<types::NameAddr> {};
 
 TEST_P(FailNameAddrTest, throws) {
@@ -90,7 +103,7 @@ INSTANTIATE_TEST_CASE_P(full_consume,
                             {}
                     )
             ),
-            GParams("groupname:login@domain.ru;",
+            GParams("groupname:login@domain.ru; \r\n ",
                     types::MailboxGroup(
                             "groupname",
                             {types::NameAddr(types::AddrSpec("login", "domain.ru"))}
@@ -108,6 +121,23 @@ INSTANTIATE_TEST_CASE_P(full_consume,
             )
         )
 );
+
+struct FailGroupTest : ParserTest<types::MailboxGroup> {};
+
+TEST_P(FailGroupTest, throws) {
+    this->test_parser_throws(&parse_group);
+}
+
+INSTANTIATE_TEST_CASE_P(bad_food,
+        FailGroupTest, ::testing::Values(
+                "no colon",
+                "no semicolon after colon:",
+                "mailbox-list ended with comma:login@yandex.ru,;",
+                "double comma::",
+                "comma-login-comma:login@yandex.ru:"
+        )
+);
+
 
 
 
