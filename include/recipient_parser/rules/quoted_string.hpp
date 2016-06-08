@@ -12,6 +12,7 @@ template<typename Iterator>
 struct QuotedString : qi::rule<Iterator, std::string()> {
     QuotedString() {
         qtext.name("qtext");
+        //Printable characters except backslash and quote
         qtext %= qi::char_("\x21-\x7e") - '\\' - '"';
 
         qcontent.name("qcontent");

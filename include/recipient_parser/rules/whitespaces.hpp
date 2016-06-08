@@ -15,6 +15,7 @@ template<typename Iterator>
 struct FWS : qi::rule<Iterator, std::string()> {
     template<typename NormalizeStrategy = normalize::None>
     FWS(NormalizeStrategy normalize_tag = NormalizeStrategy{}) {
+        // Non-RFC, because RFC stricts newline to be CRLF only, and here we support CR or LF.
         crlf.name("crlf");
         crlf %= qi::hold[(qi::char_('\r') >> -qi::char_('\n')) | qi::char_('\n')];
 

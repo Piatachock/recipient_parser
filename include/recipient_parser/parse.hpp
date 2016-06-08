@@ -9,6 +9,9 @@
 
 namespace rcpt_parser {
 
+
+// Parse RFC-5322 "address" entity. Address is either single mailbox, or mailbox group.
+// Return default-initialized boost::optional if parse failed.
 template<typename Iterator>
 boost::optional<types::Address> parse_address(Iterator& iter, const Iterator& end)
 {
@@ -25,7 +28,8 @@ boost::optional<types::Address> parse_address(const Range& range) {
     return parse_address(iter, end(range));
 }
 
-
+// Parse RFC-5322 "mailbox" entity. This parse function do not cover mailbox group case.
+// Return default-initialized boost::optional if parse failed.
 template<typename Iterator>
 boost::optional<types::Mailbox> parse_mailbox(Iterator& iter, const Iterator& end)
 {

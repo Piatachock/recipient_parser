@@ -14,6 +14,9 @@ struct AText : qi::rule<Iterator, char()> {
         static_cast<typename AText::this_type&>(*this) %=
                 ascii::alnum
               | ascii::char_("!#$%&'*+|=?^_`{|}~")
+            // minus symbol is given separately because char_() treats symbols in string
+            // as if it is inside symbol class in regexp, like [a-z0-9]. So minus has
+            // special meaning here.
               | ascii::char_('-');
     }
 };

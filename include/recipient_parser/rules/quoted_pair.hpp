@@ -9,6 +9,7 @@ template<typename Iterator>
 struct QuotedPair : qi::rule<Iterator, std::string()> {
     QuotedPair() {
         symbol.name("quoted-pair symbol");
+        //Printable characters plus whitespaces and horizontal tabs
         symbol %= qi::char_("\x21-\x7e") | qi::blank;
 
         this->name("quoted-pair");
