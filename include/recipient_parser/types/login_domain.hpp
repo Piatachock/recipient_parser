@@ -8,6 +8,7 @@
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 #include <boost/fusion/adapted/struct/adapt_struct_named.hpp>
 #include <boost/optional.hpp>
+#include <boost/variant/variant.hpp>
 
 #include <boost/fusion/include/vector.hpp>
 
@@ -18,10 +19,6 @@ struct AddrSpec {
     std::string login, domain;
 
     AddrSpec() = default;
-    /*
-    AddrSpec(const AddrSpec&) = default;
-    AddrSpec(AddrSpec&&) = default;
-    */
 
     AddrSpec(std::string login, std::string domain)
             : login(std::move(login)), domain(std::move(domain)) {}
@@ -41,10 +38,6 @@ struct NameAddr {
     AddrSpec addr_spec;
 
     NameAddr() = default;
-    /*
-    NameAddr(const NameAddr&) = default;
-    NameAddr(NameAddr&&) = default;
-    */
 
     NameAddr(std::string display_name, AddrSpec addr_spec)
             : display_name(std::move(display_name)),
@@ -75,10 +68,6 @@ struct MailboxGroup {
     GroupList group;
 
     MailboxGroup() = default;
-    /*
-    MailboxGroup(const MailboxGroup&) = default;
-    MailboxGroup(MailboxGroup&&) = default;
-    */
 
     MailboxGroup(std::string display_name, GroupList group)
             : display_name(std::move(display_name)),
@@ -106,7 +95,7 @@ inline std::ostream& operator<<(std::ostream& out, const MailboxGroup& group) {
 }
 
 
-
+using Address = boost::variant<NameAddr, MailboxGroup>;
 
 }}
 

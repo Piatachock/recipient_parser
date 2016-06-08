@@ -7,25 +7,6 @@
 #include "text.hpp"
 
 namespace rcpt_parser {
-#if 0
-template<typename Iterator>
-struct Address : qi::rule<Iterator, types::AddrSpec()> {
-    Address() {
-        this->name("address");
-        static_cast<typename Address::this_type&>(*this) %=
-                mailbox | group;
-    }
-    Mailbox<Iterator> mailbox;
-    Group<Iterator> group;
-};
-
-template<typename Iterator>
-void debug(Address<Iterator>& lp) {
-    debug(static_cast<typename Address<Iterator>::this_type&>(lp));
-    debug(lp.mailbox);
-    debug(lp.group);
-}
-#endif
 
 template<typename Iterator>
 struct DisplayName : Phrase<Iterator> {
@@ -113,6 +94,24 @@ void debug(Group<Iterator>& group) {
     debug(group.mailbox_list);
     debug(group.cfws);
     debug(group.mailbox);
+}
+
+template<typename Iterator>
+struct Address : qi::rule<Iterator, types::Address()> {
+    Address() {
+        this->name("address");
+        static_cast<typename Address::this_type&>(*this) %=
+                mailbox | group;
+    }
+    Mailbox<Iterator> mailbox;
+    Group<Iterator> group;
+};
+
+template<typename Iterator>
+void debug(Address<Iterator>& addr) {
+    debug(static_cast<typename Address<Iterator>::this_type&>(addr));
+    debug(addr.mailbox);
+    debug(addr.group);
 }
 
 } // namespace rcpt_parser
