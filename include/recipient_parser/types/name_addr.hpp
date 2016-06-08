@@ -25,6 +25,8 @@ inline bool operator==(const NameAddr& lhs, const NameAddr& rhs) {
         && lhs.addr_spec == rhs.addr_spec;
 }
 
+using Mailbox = NameAddr;
+
 }}
 
 BOOST_FUSION_ADAPT_STRUCT(
