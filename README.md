@@ -71,15 +71,15 @@ For according RFC 5322 sections, start from [here](https://tools.ietf.org/html/r
 
 ###Project structure
 Project repository consists of folders:
-####[include/recipient_parser/](github.yandex-team.ru/mail/recipient_parser/include/recipient_parser)
+####[include/recipient_parser/](include/recipient_parser)
 Contains single header named `parse.hpp`. Interface functions are defined there.
-#####[include/recipient_parser/rules](github.yandex-team.ru/mail/recipient_parser/include/recipient_parser/rules)
+#####[include/recipient_parser/rules](include/recipient_parser/rules)
 Collection of parse rules. Parse rules are one-to-one mapped to RFC 5322 entities. and are named after them. One can use any of them to parse some part of recipient.
-#####[include/recipient_parser/types](github.yandex-team.ru/mail/recipient_parser/include/recipient_parser/types)
+#####[include/recipient_parser/types](include/recipient_parser/types)
 Data structures that are used as output of parse functions. Also named after RFC 5322 entities they represent.
 
-####[share/](github.yandex-team.ru/mail/recipient_parser/share)
+####[share/](share)
 Contains `FindRECIPIENT_PARSER.cmake` which allows `find_package(RECIPIENT_PARSER)` for library clients, and `find_recipient_parser_dependencies.cmake` to find library dependencies (currently, only Spirit).
 
-####[tests/](github.yandex-team.ru/mail/recipient_parser/tests)
+####[tests/](tests)
 Unit tests via googletest.
