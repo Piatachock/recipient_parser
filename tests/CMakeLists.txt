@@ -30,8 +30,42 @@ macro(add_external_googletest URL)
 endmacro()
 
 
-add_external_googletest("https://github.yandex-team.ru/mail/googletest.git")
+list(APPEND
+  CMAKE_CXX_FLAGS
+  "-g"
+  "-O0"
+  "-Wall"
+  "-Werror"
+  "-Wextra"
+  "-Wconversion"
+  "-Wcast-qual"
+  "-Woverloaded-virtual"
+  "-Wctor-dtor-privacy"
+  "-Wnon-virtual-dtor"
+  "-Wold-style-cast"
+  "-Wpacked"
+  "-Wredundant-decls"
+  "-fexceptions"
+  "-std=gnu++11"
+)
 
+message("
+    Configuration
+    -------------
+    PROJECT_NAME            = ${PROJECT_NAME}
+    PROJECT_SOURCE_DIR      = ${PROJECT_SOURCE_DIR}
+    PROJECT_BINARY_DIR      = ${PROJECT_BINARY_DIR}
+    CMAKE_CXX_COMPILER      = ${CMAKE_CXX_COMPILER}
+    CXXFLAGS                = $ENV{CXXFLAGS}
+    CMAKE_CXX_FLAGS         = ${CMAKE_CXX_FLAGS}
+    CPPFLAGS                = $ENV{CPPFLAGS}
+    CMAKE_CPP_FLAGS         = ${CMAKE_CPP_FLAGS}
+    CMAKE_INSTALL_PREFIX    = ${CMAKE_INSTALL_PREFIX}
+    CMAKE_INSTALL_SHAREDIR  = ${CMAKE_INSTALL_SHAREDIR}
+")
+
+
+add_external_googletest("https://github.yandex-team.ru/mail/googletest.git")
 
 set(DEPENDENCIES
   gmock
