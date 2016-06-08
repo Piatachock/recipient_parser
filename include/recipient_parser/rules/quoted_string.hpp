@@ -19,23 +19,24 @@ struct QuotedString : qi::rule<Iterator, std::string()> {
 
         this->name("quoted-string");
         static_cast<typename QuotedString::this_type&>(*this) %=
-                -qi::omit[cfws]
-              >> qi::lit('"')
+                qi::hold[-cfws
+              >> qi::char_('"')
               >> *qi::hold[-fws >> qcontent]
               >> -end_fws
-              >> qi::lit('"')
-              >> -qi::omit[cfws];
+              >> qi::char_('"')
+              >> -end_cfws];
     }
-    CFWS<Iterator> cfws;
+    CFWS<Iterator> cfws, end_cfws;
     FWS<Iterator> fws, end_fws;
     QuotedPair<Iterator> qp;
-    qi::rule<Iterator, char()> qtext, qcontent;
+    qi::rule<Iterator, std::string()> qtext, qcontent;
 };
 
 template<typename Iterator>
 void debug(QuotedString<Iterator>& qs) {
     debug(static_cast<typename QuotedString<Iterator>::this_type&>(qs));
     debug(qs.cfws);
+    debug(qs.end_cfws);
     debug(qs.fws);
     debug(qs.end_fws);
     debug(qs.qp);

@@ -40,9 +40,9 @@ struct Domain : qi::rule<Iterator, std::string()> {
         domain_literal.name("domain-literal");
         domain_literal %=
                 -qi::omit[cfws]
-              >> qi::char_('[')
+              >> qi::hold[qi::char_('[')
               >> *qi::hold[-fws >> dtext] >> -end_fws
-              >> qi::char_(']')
+              >> qi::char_(']')]
               >> -qi::omit[cfws];
 
         dtext.name("dtext");

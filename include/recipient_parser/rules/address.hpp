@@ -4,6 +4,7 @@
 #include "../detail/spirit.hpp"
 
 #include "addr_spec.hpp"
+#include "text.hpp"
 
 namespace rcpt_parser {
 #if 0
@@ -25,10 +26,6 @@ void debug(Address<Iterator>& lp) {
     debug(lp.group);
 }
 #endif
-
-//TODO
-template<typename Iterator>
-using Phrase = DotAtom<Iterator>;
 
 template<typename Iterator>
 struct DisplayName : Phrase<Iterator> {

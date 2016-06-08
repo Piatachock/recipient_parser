@@ -21,8 +21,8 @@ TEST_P(SuccessNameAddrTest, basic_testcase) {
 
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessNameAddrTest, ::testing::Values(
-            Params("displayname <login@domain.ru>", types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))),
-            Params("spaced display name <smth@smw>", types::NameAddr("spaced display name", types::AddrSpec("smth", "smw"))),
+            Params("displayname <login@domain.ru>", types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))),
+            Params("spaced display name <smth@smw>", types::NameAddr("spaced display name ", types::AddrSpec("smth", "smw"))),
             Params("<login@domain.ru>",             types::NameAddr(types::AddrSpec("login", "domain.ru"))),
             Params("< \r\n login@domain.ru >",             types::NameAddr(types::AddrSpec("login", "domain.ru")))
         )
@@ -50,7 +50,7 @@ TEST_P(SuccessMailboxTest, basic_testcase) {
 
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessMailboxTest, ::testing::Values(
-            Params("displayname <login@domain.ru>", types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))),
+            Params("displayname <login@domain.ru>", types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))),
             Params("login@domain.ru",               types::NameAddr(types::AddrSpec("login", "domain.ru")))
         )
 );

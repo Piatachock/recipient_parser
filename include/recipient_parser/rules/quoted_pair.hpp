@@ -6,14 +6,14 @@
 namespace rcpt_parser {
 
 template<typename Iterator>
-struct QuotedPair : qi::rule<Iterator, char()> {
+struct QuotedPair : qi::rule<Iterator, std::string()> {
     QuotedPair() {
         symbol.name("quoted-pair symbol");
         symbol %= qi::char_("\x21-\x7e") | qi::blank;
 
         this->name("quoted-pair");
         static_cast<typename QuotedPair::this_type&>(*this) %=
-                qi::lit('\\') >> symbol;
+                qi::char_('\\') >> symbol;
     }
     qi::rule<Iterator, char()> symbol;
 };

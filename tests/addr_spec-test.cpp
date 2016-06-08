@@ -22,14 +22,15 @@ INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessDomainTest, ::testing::Values(
                 "str.ing",          // dot-atom
                 "[.literal]",       // address literal, even with leading dot
-                "[ \t spaced ]"     // address literal with fws
+                "[ \t spaced ]",    // address literal with fws
+                "[ \r\n with_fws]"
         )
 );
 
 INSTANTIATE_TEST_CASE_P(full_consume_part_result,
         SuccessDomainTest, ::testing::Values(
-                SParserParams{"\r\n [with_cfws] ", "[with_cfws]" }, // trims outer cfws
-                SParserParams{"[ \r\n with_fws]" , "[  with_fws]"}  // skip CRLF in inner fws
+                SParserParams{"\r\n [with_cfws]", "[with_cfws]" }, // trims outer cfws
+                SParserParams{"[with_cfws] "    , "[with_cfws]" } // trims outer cfws
         )
 );
 

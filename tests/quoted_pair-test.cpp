@@ -11,8 +11,7 @@ namespace {
 using namespace testing;
 using namespace rcpt_parser;
 
-struct SuccessQPTest : ParserTest<char> {};
-using CParserParams = ParserParams<char>;
+struct SuccessQPTest : SParserTest {};
 
 
 TEST_P(SuccessQPTest, no_throw_on_parse) {
@@ -21,11 +20,11 @@ TEST_P(SuccessQPTest, no_throw_on_parse) {
 
 INSTANTIATE_TEST_CASE_P(strip_leading_backslash,
         SuccessQPTest, ::testing::Values(
-            CParserParams{"\\0" , '0' },  // Number
-            CParserParams{"\\z" , 'z' },  // Letter
-            CParserParams{"\\\\", '\\'},  // backslash
-            CParserParams{"\\\"", '"' },  // dquote
-            CParserParams{"\\ " , ' ' }   // space
+            "\\0",      // Number
+            "\\z",      // Letter
+            "\\\\",     // backslash
+            "\\\"",     // dquote
+            "\\ "       // space
         )
 );
 

@@ -19,11 +19,14 @@ TEST_P(SuccessQSTest, no_throw) {
 
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessQSTest, ::testing::Values(
-            SParserParams{"\"abc\""       , "abc"    },  // trims_quotes
-            SParserParams{" \"abc\" "     , "abc"    },  // trims_outer_cwfs
-            SParserParams{"\" \r\n abc \"", "  abc " },  // take_inner_fws
-            SParserParams{"\" a b c \""   , " a b c "},  // take_multiple_fws
-            SParserParams{"\"a\\\\\\\"b\"", "a\\\"b" }   // quoted-pairs with backslash and dquote
+            "\"abc\"",
+
+            "\" a b c \"",
+            "\"\r\n abc \"",  // take_inner_fws
+
+            "\"a\\\\\\\"b\"",
+
+            " \"abc\" "
         )
 );
 
