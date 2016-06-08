@@ -23,7 +23,7 @@ struct Atom : qi::rule<Iterator, std::string()> {
     Atom() {
         this->name("atom");
         static_cast<typename Atom::this_type&>(*this) %=
-                -cfws >> +atext >> -end_cfws;
+                qi::hold[-cfws >> +atext >> -end_cfws];
     }
     CFWS<Iterator> cfws, end_cfws;
     AText<Iterator> atext;
@@ -45,9 +45,9 @@ struct DotAtom : qi::rule<Iterator, std::string()> {
 
         this->name("dot-atom (trimmed word with dots, except first and last symbol)");
         static_cast<typename DotAtom::this_type&>(*this) %=
-                -qi::omit[cfws] >> dot_atom_text >> -qi::omit[cfws];
+                qi::hold[-cfws >> dot_atom_text >> -end_cfws];
     }
-    CFWS<Iterator> cfws;
+    CFWS<Iterator> cfws, end_cfws;
     AText<Iterator> atext;
     qi::rule<Iterator, std::string()> dot_atom_text;
 };
@@ -56,6 +56,7 @@ template<typename Iterator>
 void debug(DotAtom<Iterator>& dot_atom) {
     debug(static_cast<typename DotAtom<Iterator>::this_type&>(dot_atom));
     debug(dot_atom.cfws);
+    debug(dot_atom.end_cfws);
     debug(dot_atom.atext);
     debug(dot_atom.dot_atom_text);
 }

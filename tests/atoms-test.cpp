@@ -20,20 +20,15 @@ TEST_P(SuccessDotAtomTest, no_throw) {
 INSTANTIATE_TEST_CASE_P(full_consume_no_trim,
         SuccessDotAtomTest, ::testing::Values(
             "!#$%&'*+|=?^_`{|}~-",  // allow specials
-            "str.ing"               // allow dot inside word
-        )
-);
-
-INSTANTIATE_TEST_CASE_P(full_consume_trim,
-        SuccessDotAtomTest, ::testing::Values(
-            SParserParams{" \tword", "word"},      // trim left
-            SParserParams{"word\t ", "word"}       // trim right
+            "str.ing",              // allow dot inside word
+            " \tword",
+            "word \t"
         )
 );
 
 INSTANTIATE_TEST_CASE_P(partial_consume,
         SuccessDotAtomTest, ::testing::Values(
-            SParserParams{"first second", "first" , "second"},  //stops after whitespaces (and trim them)
+            SParserParams{"first second", "first ", "second"},  //stops after whitespaces (and trim them)
             SParserParams{"foo\"bar"    , "foo"   , "\"bar" },  //stops on dquote, excluding
             SParserParams{"string."     , "string", "."     }   //stops on dot as last symbol, excluding
         )

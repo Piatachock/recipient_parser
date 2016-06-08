@@ -9,6 +9,7 @@ namespace rcpt_parser {
 
 std::string::const_iterator parse_name_addr(const std::string& input, types::NameAddr& result);
 std::string::const_iterator parse_mailbox(const std::string& input, types::NameAddr& result);
+std::string::const_iterator parse_group(const std::string& input, types::MailboxGroup& result);
 
 }
 

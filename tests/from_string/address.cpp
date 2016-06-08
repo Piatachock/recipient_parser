@@ -13,4 +13,8 @@ std::string::const_iterator parse_mailbox(const std::string& input, types::NameA
     return detail::parse_template<Mailbox>(input, result);
 }
 
+std::string::const_iterator parse_group(const std::string& input, types::MailboxGroup& result) {
+    return detail::parse_template<Group>(input, result);
+}
+
 } // namespace rcpt_parser

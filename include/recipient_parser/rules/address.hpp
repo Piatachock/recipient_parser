@@ -84,9 +84,9 @@ void debug(Mailbox<Iterator>& mb) {
     debug(mb.addr_spec);
 }
 
-#if 0
+
 template<typename Iterator>
-struct Group : qi::rule<Iterator, types::AddrSpec()> {
+struct Group : qi::rule<Iterator, types::MailboxGroup()> {
     Group() {
         this->name("group");
         static_cast<typename Group::this_type&>(*this) %=
@@ -99,9 +99,7 @@ struct Group : qi::rule<Iterator, types::AddrSpec()> {
         mailbox_list %= mailbox % ',';
     }
     DisplayName<Iterator> display_name;
-    FuckenHell<Iterator> group_list;
-
-    FuckenHell2<Iterator> mailbox_list;
+    qi::rule<Iterator, types::MailboxGroup::GroupList()> group_list, mailbox_list;
     CFWS<Iterator> cfws;
 
     Mailbox<Iterator> mailbox;
@@ -112,10 +110,11 @@ void debug(Group<Iterator>& group) {
     debug(static_cast<typename Group<Iterator>::this_type&>(group));
     debug(group.display_name);
     debug(group.group_list);
+    debug(group.mailbox_list);
     debug(group.cfws);
     debug(group.mailbox);
 }
-#endif
+
 } // namespace rcpt_parser
 
 #endif
