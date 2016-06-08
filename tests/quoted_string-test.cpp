@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <recipient_parser/error.hpp>
-
 #include "from_string/quoted_string.hpp"
 #include "common.hpp"
 
@@ -32,8 +30,8 @@ INSTANTIATE_TEST_CASE_P(full_consume,
 
 struct FailQSTest: SParserTest {};
 
-TEST_P(FailQSTest, throws) {
-    this->test_parser_throws(&parse_quoted_string);
+TEST_P(FailQSTest, fails) {
+    this->test_parser_fails(&parse_quoted_string);
 }
 
 INSTANTIATE_TEST_CASE_P(two_crlf,

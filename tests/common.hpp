@@ -4,8 +4,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <recipient_parser/error.hpp>
-
 #include <type_traits>
 
 namespace rcpt_parser {
@@ -90,25 +88,27 @@ struct ParserTest : PrinterTest, ::testing::WithParamInterface<ParserParams<Resu
     template<typename ParseFunc>
     void test_parser(ParseFunc f, const Params& params) {
         const std::string& input = params.input;
-        Result result;
+        Result parsed;
 
-        auto stopped_at = f(input, result);
-        auto unparsed = std::string(stopped_at, input.end());
+        auto result = f(input, parsed);
+        auto success = result.first;
+        auto unparsed = std::string(result.second, input.end());
 
+        ASSERT_TRUE(success);
         ASSERT_EQ(unparsed, params.unparsed);
-        ASSERT_EQ(result, params.result);
+        ASSERT_EQ(parsed, params.result);
     }
 
-    template<typename Exception = ParseError, typename ParseFunc>
-    void test_parser_throws(ParseFunc f) {
-        test_parser_throws<Exception>(f, this->GetParam());
+    template<typename ParseFunc>
+    void test_parser_fails(ParseFunc f) {
+        test_parser_fails(f, this->GetParam());
     }
 
-    template<typename Exception = ParseError, typename ParseFunc>
-    void test_parser_throws(ParseFunc f, const Params& params) {
+    template<typename ParseFunc>
+    void test_parser_fails(ParseFunc f, const Params& params) {
         const auto input = params.input;
         Result result;
-        ASSERT_THROW(f(input, result), Exception);
+        ASSERT_FALSE(f(input, result).first);
     }
 };
 

@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <recipient_parser/error.hpp>
-
 #include "from_string/whitespaces.hpp"
 #include "common.hpp"
 
@@ -42,8 +40,8 @@ INSTANTIATE_TEST_CASE_P(partial_consume,
 
 struct FailFWSTest: SParserTest {};
 
-TEST_P(FailFWSTest, throws) {
-    this->test_parser_throws(&parse_fws);
+TEST_P(FailFWSTest, fails) {
+    this->test_parser_fails(&parse_fws);
 }
 
 INSTANTIATE_TEST_CASE_P(two_crlf,

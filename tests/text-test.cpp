@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <recipient_parser/error.hpp>
-
 #include "from_string/text.hpp"
 #include "common.hpp"
 
@@ -38,8 +36,8 @@ INSTANTIATE_TEST_CASE_P(partial_consume,
 
 struct FailPhraseTest : SParserTest {};
 
-TEST_F(FailPhraseTest, throws_on_leading_dot) {
-    this->test_parser_throws(&parse_phrase, SParserParams{".string"});
+TEST_F(FailPhraseTest, fails_on_leading_dot) {
+    this->test_parser_fails(&parse_phrase, SParserParams{".string"});
 }
 
 }

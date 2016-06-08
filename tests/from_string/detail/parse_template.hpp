@@ -1,31 +1,29 @@
 #ifndef RECIPIENT_PARSER_SRC_FROM_STRING_DETAIL_PARSE_TEMPLATE_HPP_
 #define RECIPIENT_PARSER_SRC_FROM_STRING_DETAIL_PARSE_TEMPLATE_HPP_
 
+#include "error.hpp"
 #include "grammar_from_rule.hpp"
 
 namespace rcpt_parser {
 namespace detail {
 
 using StrCIter = std::string::const_iterator;
+using Result = std::pair<bool, StrCIter>;
 
 template<template <typename> class Rule>
-StrCIter parse_template(const std::string& input) {
+Result parse_template(const std::string& input) {
     using StringRule = Rule<StrCIter>;
     using StringGrammar = GrammarFromRule<StringRule>;
 
     StringGrammar parser(true);
 
     auto iter = input.begin();
-    if( !qi::parse(iter, input.end(), parser) ) {
-        auto err_msg = std::string(__PRETTY_FUNCTION__)
-                     + std::string(": qi::parse return false");
-        throw ParseError( err_msg );
-    }
-    return iter;
+    auto success = qi::parse(iter, input.end(), parser);
+    return {success, iter};
 }
 
 template<template <typename> class Rule>
-StrCIter parse_template(
+Result parse_template(
         const std::string& input,
         typename Rule<StrCIter>::attr_type& result) {
     using StringRule = Rule<StrCIter>;
@@ -34,12 +32,8 @@ StrCIter parse_template(
     StringGrammar parser(true);
 
     auto iter = input.begin();
-    if( !qi::parse(iter, input.end(), parser, result) ) {
-        auto err_msg = std::string(__PRETTY_FUNCTION__)
-                     + std::string(": qi::parse return false");
-        throw ParseError( err_msg );
-    }
-    return iter;
+    auto success = qi::parse(iter, input.end(), parser, result);
+    return {success, iter};
 }
 
 }} // namespace rcpt_parser::detail

@@ -5,13 +5,13 @@
 
 namespace rcpt_parser {
 
-std::string::const_iterator parse_fws(
+std::pair<bool, std::string::const_iterator> parse_fws(
         const std::string& input,
         std::string& result) {
     return detail::parse_template<FWS>(input, result);
 }
 
-std::string::const_iterator parse_cfws(
+std::pair<bool, std::string::const_iterator> parse_cfws(
         const std::string& input,
         std::string& result) {
     return detail::parse_template<CFWS>(input, result);

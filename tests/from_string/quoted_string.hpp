@@ -5,7 +5,7 @@
 
 namespace rcpt_parser {
 
-std::string::const_iterator parse_quoted_string(
+std::pair<bool, std::string::const_iterator> parse_quoted_string(
         const std::string& input,
         std::string& result);
 

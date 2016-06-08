@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <boost/algorithm/string/join.hpp>
 
 #include "from_string/addr_spec.hpp"
 
@@ -53,8 +52,8 @@ INSTANTIATE_TEST_CASE_P(partial_consume,
 
 struct FailDomainTest : SParserTest {};
 
-TEST_P(FailDomainTest, throws) {
-    this->test_parser_throws(&parse_domain);
+TEST_P(FailDomainTest, fails) {
+    this->test_parser_fails(&parse_domain);
 }
 
 INSTANTIATE_TEST_CASE_P(bad_food,
@@ -86,8 +85,8 @@ INSTANTIATE_TEST_CASE_P(full_consume,
 
 struct FailAddrSpecTest : ParserTest<types::AddrSpec> {};
 
-TEST_P(FailAddrSpecTest, throws) {
-    this->test_parser_throws(&parse_addr_spec);
+TEST_P(FailAddrSpecTest, fails) {
+    this->test_parser_fails(&parse_addr_spec);
 }
 
 INSTANTIATE_TEST_CASE_P(bad_food,
