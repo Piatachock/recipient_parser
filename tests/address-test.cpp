@@ -57,10 +57,13 @@ TEST_P(SuccessNameAddrTest, basic_testcase) {
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessNameAddrTest, ::testing::Values(
             Params("displayname <login@domain.ru>",
-                   types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))
+                   types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))
+            ),
+            Params("display   \r\n name <login@domain.ru>",
+                   types::NameAddr("display name", types::AddrSpec("login", "domain.ru"))
             ),
             Params("spaced display name <smth@smw>",
-                   types::NameAddr("spaced display name ", types::AddrSpec("smth", "smw"))
+                   types::NameAddr("spaced display name", types::AddrSpec("smth", "smw"))
             ),
             Params("<login@domain.ru>",
                    types::NameAddr(types::AddrSpec("login", "domain.ru"))
@@ -73,11 +76,11 @@ INSTANTIATE_TEST_CASE_P(full_consume,
 
 INSTANTIATE_TEST_CASE_P(partial_consume,
         SuccessNameAddrTest, ::testing::Values(
-            Params("displayname <login@domain.ru>",
-                   types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))
+            Params("displayname <login@domain.ru> \r\n ",
+                   types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))
             ),
-            Params("displayname <login@domain.ru>",
-                   types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))
+            Params("displayname <login@domain.ru>   ",
+                   types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))
             )
         )
 );
@@ -99,13 +102,13 @@ INSTANTIATE_TEST_CASE_P(bad_food,
 struct SuccessMailboxTest : ParserTest<types::NameAddr> {};
 
 TEST_P(SuccessMailboxTest, basic_testcase) {
-    this->test_parser(&parse_mailbox);
+    this->test_parser(&test_parse_mailbox);
 }
 
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessMailboxTest, ::testing::Values(
             Params("displayname <login@domain.ru>",
-                   types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))
+                   types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))
             ),
             Params("login@domain.ru",
                    types::NameAddr(types::AddrSpec("login", "domain.ru"))
@@ -140,9 +143,9 @@ INSTANTIATE_TEST_CASE_P(full_consume,
                     types::MailboxGroup(
                             "groupname",
                             {
-                                    types::NameAddr(                 types::AddrSpec("login", "domain.ru")),
-                                    types::NameAddr("displayname " , types::AddrSpec("my", "email.com")   ),
-                                    types::NameAddr(" \"quo ted\" ", types::AddrSpec("ip", "[127.0.0.1]") ),
+                                    types::NameAddr(               types::AddrSpec("login", "domain.ru")),
+                                    types::NameAddr("displayname", types::AddrSpec("my", "email.com")   ),
+                                    types::NameAddr("\"quo ted\"", types::AddrSpec("ip", "[127.0.0.1]") ),
                             }
                     )
             )
@@ -171,13 +174,13 @@ using AParams = ParserParams<types::Address>;
 struct SuccessAddressTest : ParserTest<types::Address> {};
 
 TEST_P(SuccessAddressTest, basic_testcase) {
-    this->test_parser(&parse_address);
+    this->test_parser(&test_parse_address);
 }
 
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessAddressTest, ::testing::Values(
             AParams("displayname <login@domain.ru>",
-                    types::NameAddr("displayname ", types::AddrSpec("login", "domain.ru"))
+                    types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))
             ),
             AParams("groupname:;",
                     types::MailboxGroup("groupname", {})

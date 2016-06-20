@@ -11,7 +11,7 @@ std::pair<bool, std::string::const_iterator> parse_name_addr(const std::string& 
     return detail::parse_template<NameAddr>(input, result);
 }
 
-std::pair<bool, std::string::const_iterator> parse_mailbox(const std::string& input, types::Mailbox& result) {
+std::pair<bool, std::string::const_iterator> test_parse_mailbox(const std::string& input, types::Mailbox& result) {
     auto iter = input.begin();
     auto parse_result = parse_mailbox(iter, input.end());
     if( parse_result ) {
@@ -24,7 +24,7 @@ std::pair<bool, std::string::const_iterator> parse_group(const std::string& inpu
     return detail::parse_template<Group>(input, result);
 }
 
-std::pair<bool, std::string::const_iterator> parse_address(const std::string& input, types::Address& result) {
+std::pair<bool, std::string::const_iterator> test_parse_address(const std::string& input, types::Address& result) {
     auto iter = input.begin();
     auto parse_result = parse_address(iter, input.end());
     if( parse_result ) {

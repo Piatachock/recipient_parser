@@ -30,8 +30,7 @@ macro(add_external_googletest URL)
 endmacro()
 
 
-list(APPEND
-  CMAKE_CXX_FLAGS
+set(MY_CXX_FLAGS
   "-g"
   "-O0"
   "-Wall"
@@ -47,6 +46,15 @@ list(APPEND
   "-Wredundant-decls"
   "-fexceptions"
   "-std=gnu++11"
+)
+
+foreach(FLAG ${MY_CXX_FLAGS})
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAG}")
+endforeach()
+
+add_definitions(
+  -DBOOST_RESULT_OF_USE_DECLTYPE
+  -DBOOST_SPIRIT_USE_PHOENIX_V3
 )
 
 message("
@@ -70,6 +78,7 @@ add_external_googletest("https://github.yandex-team.ru/mail/googletest.git")
 set(DEPENDENCIES
   gmock
   dl
+  pthread
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})

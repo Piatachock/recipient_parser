@@ -118,6 +118,22 @@ void debug(Address<Iterator>& addr) {
     debug(addr.group);
 }
 
+template<typename Iterator>
+struct AddressList : qi::rule<Iterator, types::AddressList()> {
+    AddressList() {
+        static_cast<typename AddressList::this_type&>(*this) %=
+                addr % ',';
+    }
+    Address<Iterator> addr;
+};
+
+
+template<typename Iterator>
+void debug(AddressList<Iterator>& list) {
+    debug(static_cast<typename AddressList<Iterator>::this_type&>(list));
+    debug(list.addr);
+}
+
 } // namespace rcpt_parser
 
 #endif

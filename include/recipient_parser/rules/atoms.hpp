@@ -26,7 +26,7 @@ struct Atom : qi::rule<Iterator, std::string()> {
     Atom() {
         this->name("atom");
         static_cast<typename Atom::this_type&>(*this) %=
-                qi::hold[-cfws >> +atext >> -end_cfws];
+                -qi::omit[cfws] >> +atext >> -qi::omit[end_cfws];
     }
     CFWS<Iterator> cfws, end_cfws;
     AText<Iterator> atext;

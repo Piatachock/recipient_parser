@@ -22,9 +22,7 @@ INSTANTIATE_TEST_CASE_P(full_consume,
             "\" a b c \"",
             "\"\r\n abc \"",  // take_inner_fws
 
-            "\"a\\\\\\\"b\"",
-
-            " \"abc\" "
+            "\"a\\\\\\\"b\""
         )
 );
 

@@ -19,11 +19,18 @@ INSTANTIATE_TEST_CASE_P(full_consume_no_trim,
         SuccessPhraseTest, ::testing::Values(
             "word",                         // single atom word
             "two words",                    // two atom words
-            " word",
-            "word ",
             "\"quoted string\"",            // single quoted string
-            "\"quo ted\"\"str ing\"",       // two quoted strings
             "atom \"and quoted\" string"    // two quoted strings
+        )
+);
+
+INSTANTIATE_TEST_CASE_P(full_consume_trim_spaces,
+        SuccessPhraseTest, ::testing::Values(
+                SParserParams{" word", "word"},
+                SParserParams{"word ", "word"},
+                SParserParams{" first second ", "first second"},
+                SParserParams{"\"quo ted\"\"str ing\"", "\"quo ted\" \"str ing\""}
+                                                                // adds space between two quoted strings
         )
 );
 

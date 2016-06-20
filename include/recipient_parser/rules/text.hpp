@@ -6,6 +6,9 @@
 #include "atoms.hpp"
 #include "quoted_string.hpp"
 
+#include <boost/algorithm/string/join.hpp>
+#include <boost/phoenix/bind.hpp>
+
 namespace rcpt_parser {
 
 template<typename Iterator>
@@ -32,7 +35,13 @@ template<typename Iterator>
 struct Phrase : qi::rule<Iterator, std::string()> {
     Phrase() {
         this->name("phrase");
-        static_cast<typename Phrase::this_type&>(*this) %= +word;
+
+        auto action = [](
+                const std::vector<std::string>& words,
+                typename qi::rule<Iterator, std::string()>::context_type& context) {
+            boost::fusion::at_c<0>(context.attributes) = boost::join(words, " ");
+        };
+        static_cast<typename Phrase::this_type&>(*this) = (+word)[action];
     }
 
     Word<Iterator> word;

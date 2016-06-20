@@ -69,7 +69,7 @@ void debug(Domain<Iterator>& dom) {
 }
 
 template<typename Iterator>
-struct AddrSpec : qi::rule<Iterator, types::AddrSpec> {
+struct AddrSpec : qi::rule<Iterator, types::AddrSpec()> {
     AddrSpec() {
         this->name("addr-spec");
         static_cast<typename AddrSpec::this_type&>(*this) %= local_part >> "@" >> domain;
