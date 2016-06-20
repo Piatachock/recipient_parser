@@ -48,7 +48,7 @@ struct DotAtom : qi::rule<Iterator, std::string()> {
 
         this->name("dot-atom (trimmed word with dots, except first and last symbol)");
         static_cast<typename DotAtom::this_type&>(*this) %=
-                qi::hold[-cfws >> dot_atom_text >> -end_cfws];
+                -qi::omit[cfws] >> dot_atom_text >> -qi::omit[end_cfws];
     }
     CFWS<Iterator> cfws, end_cfws;
     AText<Iterator> atext;

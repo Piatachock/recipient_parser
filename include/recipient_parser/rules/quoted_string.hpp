@@ -21,10 +21,9 @@ struct QuotedString : qi::rule<Iterator, std::string()> {
         this->name("quoted-string");
         static_cast<typename QuotedString::this_type&>(*this) %=
                 -qi::omit[cfws]
-              >> qi::hold[qi::char_('"')
-              >> *qi::hold[-fws >> qcontent]
-              >> -end_fws
-              >> qi::char_('"')]
+              >> qi::lit('"')
+              >> qi::hold[*qi::hold[-fws >> qcontent] >> -end_fws]
+              >> qi::lit('"')
               >> -qi::omit[end_cfws];
     }
     CFWS<Iterator> cfws, end_cfws;

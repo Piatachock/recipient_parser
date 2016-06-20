@@ -48,9 +48,9 @@ struct ParserParams {
                 !std::is_convertible<T, ParserParams>::value
             >::type* = 0,       //catches copy-constructor otherwise
             typename std::enable_if<
-                std::is_convertible<T, Result>::value
+                std::is_constructible<Result, T>::value
             >::type* = 0)       //if result(input) is possible
-        : input(input), result(input) {}
+        : input(input), result{input} {}
 
     template<typename T>
     ParserParams(
@@ -59,18 +59,18 @@ struct ParserParams {
                 !std::is_convertible<T, ParserParams>::value
             >::type* = 0,       //catches copy-constructor otherwise
             typename std::enable_if<
-                !std::is_convertible<T, Result>::value
+                !std::is_constructible<Result, T>::value
             >::type* = 0)       //if result(input) is impossible
         : input(input) {}
 };
 
 template<typename Result>
 inline std::ostream& operator<<(std::ostream& out, const ParserParams<Result>& params) {
-    out << "ParserParams("
-            <<     "input=\""    << params.input
-            << "\", result=\""   << params.result
-            << "\", unparsed=\"" << params.unparsed
-            << "\")";
+    out << "ParserParams(";
+            out <<     "input=\""    << params.input;
+            out << "\", result=\""   << params.result;
+            out << "\", unparsed=\"" << params.unparsed;
+            out << "\")";
     return out;
 }
 
@@ -79,6 +79,8 @@ using SParserParams = ParserParams<std::string>;
 template<typename Result>
 struct ParserTest : PrinterTest, ::testing::WithParamInterface<ParserParams<Result>> {
     using Params = ParserParams<Result>;
+
+    virtual ~ParserTest() {}
 
     template<typename ParseFunc>
     void test_parser(ParseFunc f) {

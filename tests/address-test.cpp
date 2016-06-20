@@ -5,29 +5,36 @@
 
 #include "common.hpp"
 
+#include <boost/algorithm/string/join.hpp>
+
 namespace rcpt_parser {
 namespace types {
 
-inline std::ostream& operator<<(std::ostream& out, const AddrSpec& email) {
+inline std::ostream& operator<<(std::ostream& out, const types::AddrSpec& email) {
     out << "AddrSpec(\"" << email.login << "\", \"" << email.domain << "\")";
     return out;
 }
 
-inline std::ostream& operator<<(std::ostream& out, const NameAddr& email) {
+inline std::ostream& operator<<(std::ostream& out, const types::Words& words) {
+    out << boost::algorithm::join(words, " ");
+    return out;
+}
+
+inline std::ostream& operator<<(std::ostream& out, const types::NameAddr& email) {
     static const char* const join_delimiter("\", \"");
     out << "NameAddr(\"";
-    if(email.display_name) {
-        out << *email.display_name << join_delimiter;
+    if(!email.display_name.empty()) {
+        out << email.display_name << join_delimiter;
     }
     out << email.addr_spec << "\")";
     return out;
 }
 
-inline std::ostream& operator<<(std::ostream& out, const MailboxGroup& group) {
+inline std::ostream& operator<<(std::ostream& out, const types::MailboxGroup& group) {
     static const char* const join_delimiter("\", \"");
     out << "MailboxGroup(\"";
-    if(group.display_name) {
-        out << *group.display_name << join_delimiter;
+    if(!group.display_name.empty()) {
+        out << group.display_name << join_delimiter;
     }
     out << "[";
     for(const auto& name_addr : group.group) {
@@ -37,8 +44,7 @@ inline std::ostream& operator<<(std::ostream& out, const MailboxGroup& group) {
     return out;
 }
 
-}
-}
+}}
 
 namespace {
 
@@ -60,16 +66,20 @@ INSTANTIATE_TEST_CASE_P(full_consume,
                    types::NameAddr("displayname", types::AddrSpec("login", "domain.ru"))
             ),
             Params("display   \r\n name <login@domain.ru>",
-                   types::NameAddr("display name", types::AddrSpec("login", "domain.ru"))
+                   types::NameAddr(
+                           types::Words{"display", "name"},
+                           types::AddrSpec("login", "domain.ru"))
             ),
             Params("spaced display name <smth@smw>",
-                   types::NameAddr("spaced display name", types::AddrSpec("smth", "smw"))
+                   types::NameAddr(
+                           types::Words{"spaced", "display", "name"},
+                           types::AddrSpec("smth", "smw"))
             ),
             Params("<login@domain.ru>",
                    types::NameAddr(types::AddrSpec("login", "domain.ru"))
             ),
             Params("< \r\n login@domain.ru >",
-                   types::NameAddr(types::AddrSpec(" \r\n login", "domain.ru "))
+                   types::NameAddr(types::AddrSpec("login", "domain.ru"))
             )
         )
 );
@@ -145,7 +155,7 @@ INSTANTIATE_TEST_CASE_P(full_consume,
                             {
                                     types::NameAddr(               types::AddrSpec("login", "domain.ru")),
                                     types::NameAddr("displayname", types::AddrSpec("my", "email.com")   ),
-                                    types::NameAddr("\"quo ted\"", types::AddrSpec("ip", "[127.0.0.1]") ),
+                                    types::NameAddr("quo ted"    , types::AddrSpec("ip", "[127.0.0.1]") ),
                             }
                     )
             )

@@ -25,7 +25,7 @@ struct NameAddr : qi::rule<Iterator, types::NameAddr()> {
         this->name("name-addr");
 
         static_cast<typename NameAddr::this_type&>(*this) %=
-                -display_name >> angle_addr;
+                (display_name | qi::attr(types::Words())) >> angle_addr;
 
         angle_addr.name("angle-addr");
         angle_addr %=

@@ -17,12 +17,11 @@ TEST_P(SuccessQSTest, no_throw) {
 
 INSTANTIATE_TEST_CASE_P(full_consume,
         SuccessQSTest, ::testing::Values(
-            "\"abc\"",
+            SParserParams{"\"abc\"", "abc"},
 
-            "\" a b c \"",
-            "\"\r\n abc \"",  // take_inner_fws
-
-            "\"a\\\\\\\"b\""
+            SParserParams{"\" a b c \""   , " a b c "},
+            SParserParams{"\"\r\n abc \"" , "\r\n abc "},  // take_inner_fws
+            SParserParams{"\"a\\\\\\\"b\"", "a\\\"b"}
         )
 );
 

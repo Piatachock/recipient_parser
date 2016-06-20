@@ -14,7 +14,7 @@ struct QuotedPair : qi::rule<Iterator, std::string()> {
 
         this->name("quoted-pair");
         static_cast<typename QuotedPair::this_type&>(*this) %=
-                qi::char_('\\') >> symbol;
+                qi::lit('\\') >> symbol;
     }
     qi::rule<Iterator, char()> symbol;
 };

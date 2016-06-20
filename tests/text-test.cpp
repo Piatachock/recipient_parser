@@ -2,49 +2,61 @@
 #include <gmock/gmock.h>
 
 #include "from_string/text.hpp"
+
 #include "common.hpp"
+
+#include <boost/algorithm/string/join.hpp>
+
+namespace std {
+
+inline std::ostream& operator<<(std::ostream& out, const std::vector<std::string>& words) {
+    out << boost::algorithm::join(words, " ");
+    return out;
+}
+
+}
 
 namespace {
 
 using namespace testing;
 using namespace rcpt_parser;
 
-struct SuccessPhraseTest : SParserTest {};
+struct PhraseTest : ParserTest<types::Words> {};
 
-TEST_P(SuccessPhraseTest, no_throw) {
+using WParams = ParserParams<types::Words>;
+
+TEST_P(PhraseTest, no_throw) {
     this->test_parser(&parse_phrase);
 }
 
 INSTANTIATE_TEST_CASE_P(full_consume_no_trim,
-        SuccessPhraseTest, ::testing::Values(
-            "word",                         // single atom word
-            "two words",                    // two atom words
-            "\"quoted string\"",            // single quoted string
-            "atom \"and quoted\" string"    // two quoted strings
+        PhraseTest, ::testing::Values(
+            WParams{"word", types::Words{"word"}},                         // single atom word
+            WParams{"two words"        , types::Words{"two", "words"}},                    // two atom words
+            WParams{"\"quoted string\"", types::Words{"quoted string"}},            // single quoted string
+            WParams{"atom \"and quoted\" string", types::Words{"atom", "and quoted", "string"}}    // two quoted strings
         )
 );
 
 INSTANTIATE_TEST_CASE_P(full_consume_trim_spaces,
-        SuccessPhraseTest, ::testing::Values(
-                SParserParams{" word", "word"},
-                SParserParams{"word ", "word"},
-                SParserParams{" first second ", "first second"},
-                SParserParams{"\"quo ted\"\"str ing\"", "\"quo ted\" \"str ing\""}
+        PhraseTest, ::testing::Values(
+                WParams{" word", types::Words{"word"}},
+                WParams{"word ", types::Words{"word"}},
+                WParams{" first second ", types::Words{"first", "second"}},
+                WParams{"\"quo ted\"\"str ing\"", types::Words{"quo ted", "str ing"}}
                                                                 // adds space between two quoted strings
         )
 );
 
 INSTANTIATE_TEST_CASE_P(partial_consume,
-        SuccessPhraseTest, ::testing::Values(
-            SParserParams{"foo\"bar"    , "foo"   , "\"bar" },  //stops on dquote, excluding
-            SParserParams{"string."     , "string", "."     }   //stops on dot as last symbol, excluding
+        PhraseTest, ::testing::Values(
+            WParams{"foo\"bar", types::Words{"foo"}   , "\"bar"},  //stops on dquote, excluding
+            WParams{"string." , types::Words{"string"}, "."    }   //stops on dot as last symbol, excluding
         )
 );
 
-struct FailPhraseTest : SParserTest {};
-
-TEST_F(FailPhraseTest, fails_on_leading_dot) {
-    this->test_parser_fails(&parse_phrase, SParserParams{".string"});
+TEST_F(PhraseTest, fails_on_leading_dot) {
+    this->test_parser_fails(&parse_phrase, WParams{".string"});
 }
 
 }

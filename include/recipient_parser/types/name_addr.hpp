@@ -4,18 +4,20 @@
 #include <boost/optional.hpp>
 
 #include "addr_spec.hpp"
+#include "text.hpp"
 
 namespace rcpt_parser {
 namespace types {
 
 struct NameAddr {
-    boost::optional<std::string> display_name;
+    Words display_name;
     AddrSpec addr_spec;
 
     NameAddr() = default;
 
-    NameAddr(std::string display_name, AddrSpec addr_spec)
-            : display_name(std::move(display_name)),
+    template<typename T>
+    NameAddr(T&& display_name, AddrSpec addr_spec)
+            : display_name{std::forward<T>(display_name)},
               addr_spec(std::move(addr_spec)) {}
     NameAddr(AddrSpec addr_spec) : addr_spec(std::move(addr_spec)) {}
 };
@@ -31,7 +33,7 @@ using Mailbox = NameAddr;
 
 BOOST_FUSION_ADAPT_STRUCT(
     rcpt_parser::types::NameAddr,
-    (boost::optional<std::string>, display_name)
+    (rcpt_parser::types::Words   , display_name)
     (rcpt_parser::types::AddrSpec, addr_spec)
 );
 

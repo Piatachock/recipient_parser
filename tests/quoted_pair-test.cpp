@@ -18,11 +18,11 @@ TEST_P(SuccessQPTest, no_throw_on_parse) {
 
 INSTANTIATE_TEST_CASE_P(strip_leading_backslash,
         SuccessQPTest, ::testing::Values(
-            "\\0",      // Number
-            "\\z",      // Letter
-            "\\\\",     // backslash
-            "\\\"",     // dquote
-            "\\ "       // space
+            SParserParams{"\\0" , "0" },    // Number
+            SParserParams{"\\z" , "z" },    // Letter
+            SParserParams{"\\ " , " " },    // space
+            SParserParams{"\\\\", "\\"},    // backslash
+            SParserParams{"\\\"", "\""}     // dquote
         )
 );
 

@@ -3,6 +3,8 @@
 
 #include "../detail/spirit.hpp"
 
+#include "../types/text.hpp"
+
 #include "atoms.hpp"
 #include "quoted_string.hpp"
 
@@ -30,18 +32,12 @@ void debug(Word<Iterator>& word) {
     debug(word.atom);
 }
 
-
 template<typename Iterator>
-struct Phrase : qi::rule<Iterator, std::string()> {
+struct Phrase : qi::rule<Iterator, types::Words()> {
     Phrase() {
         this->name("phrase");
 
-        auto action = [](
-                const std::vector<std::string>& words,
-                typename qi::rule<Iterator, std::string()>::context_type& context) {
-            boost::fusion::at_c<0>(context.attributes) = boost::join(words, " ");
-        };
-        static_cast<typename Phrase::this_type&>(*this) = (+word)[action];
+        static_cast<typename Phrase::this_type&>(*this) = (+word);
     }
 
     Word<Iterator> word;
