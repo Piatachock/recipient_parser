@@ -5,6 +5,7 @@
 
 namespace rcpt_parser {
 
+//TODO: rework this tag-system to match style in QuotedPair and QuotedString
 namespace normalize {
     struct None {};   //leave data as-is
     struct Crlf {};   //throw away crlf (RFC)

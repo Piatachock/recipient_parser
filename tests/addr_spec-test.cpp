@@ -21,6 +21,22 @@ namespace {
 using namespace testing;
 using namespace rcpt_parser;
 
+struct SuccessLocalPartTest : SParserTest {};
+
+TEST_P(SuccessLocalPartTest, ok) {
+    this->test_parser(&parse_local_part);
+}
+
+INSTANTIATE_TEST_CASE_P(full_consume,
+        SuccessLocalPartTest, ::testing::Values(
+                "str.ing",              // dot-atom
+                "\" quoted string \"",  // quoted-string, double quotes remain
+                "\" qs \\\" with qp \"" // quoted-string with inner quote in quoted-pair
+        )
+);
+
+
+
 struct SuccessDomainTest : SParserTest {};
 
 TEST_P(SuccessDomainTest, ok) {

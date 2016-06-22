@@ -5,6 +5,10 @@
 
 namespace rcpt_parser {
 
+std::pair<bool, std::string::const_iterator> parse_local_part(const std::string& input, std::string& result) {
+    return detail::parse_template<LocalPart>(input, result);
+}
+
 std::pair<bool, std::string::const_iterator> parse_domain(const std::string& input, std::string& result) {
     return detail::parse_template<Domain>(input, result);
 }

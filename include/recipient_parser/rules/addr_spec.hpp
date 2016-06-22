@@ -14,7 +14,12 @@ namespace rcpt_parser {
 
 template<typename Iterator>
 struct LocalPart : qi::rule<Iterator, std::string()> {
-    LocalPart() {
+    struct QSTraits :
+            traits::quoted_string::PreserveQuotes,
+            traits::quoted_string::RemoveOuterCWFS
+    {};
+
+    LocalPart() : quoted_string(QSTraits{}) {
         this->name("local-part");
         static_cast<typename LocalPart::this_type&>(*this) %=
                 dot_atom | quoted_string;
