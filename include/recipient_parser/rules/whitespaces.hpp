@@ -5,23 +5,26 @@
 
 namespace rcpt_parser {
 
-//TODO: rework this tag-system to match style in QuotedPair and QuotedString
-namespace normalize {
-    struct None {};   //leave data as-is
-    struct Crlf {};   //throw away crlf (RFC)
-    struct All {};    //squash FWS into single whitespace
-}
+namespace traits {
+namespace whitespaces {
+
+struct PreserveCRLF {};  //leave data as-is
+struct RemoveCRLF {};   //throw away crlf (RFC)
+
+using Default = RemoveCRLF;
+
+}}
 
 template<typename Iterator>
 struct FWS : qi::rule<Iterator, std::string()> {
-    template<typename NormalizeStrategy = normalize::None>
-    FWS(NormalizeStrategy normalize_tag = NormalizeStrategy{}) {
+    template<typename Tag = traits::whitespaces::Default>
+    FWS(Tag tag = Tag{}) {
         // Non-RFC, because RFC stricts newline to be CRLF only, and here we support CR or LF.
         crlf.name("crlf");
         crlf %= qi::hold[(qi::char_('\r') >> -qi::char_('\n')) | qi::char_('\n')];
 
         folded.name("folded fws");
-        init_folded(normalize_tag);
+        init_folded(tag);
 
         nonfolded.name("nonfolded fws");
         nonfolded %= +qi::blank;
@@ -30,16 +33,12 @@ struct FWS : qi::rule<Iterator, std::string()> {
         static_cast<typename FWS::this_type&>(*this) %= folded | nonfolded;
     }
 
-    void init_folded(normalize::None) {
+    void init_folded(traits::whitespaces::PreserveCRLF) {
         folded %= qi::hold[*qi::blank >> crlf >> +qi::blank];
     }
 
-    void init_folded(normalize::Crlf) {
+    void init_folded(traits::whitespaces::RemoveCRLF) {
         folded %= qi::hold[*qi::blank >> qi::omit[crlf] >> +qi::blank];
-    }
-
-    void init_folded(normalize::All) {
-        folded %= qi::omit[*qi::blank >> crlf >> +qi::blank] >> qi::attr(" ");
     }
 
     qi::rule<Iterator, std::string()> crlf, folded, nonfolded;
@@ -57,8 +56,8 @@ void debug(FWS<Iterator>& fws) {
 // Non-RFC, no comments so far
 template<typename Iterator>
 struct CFWS : qi::rule<Iterator, std::string()> {
-    template<typename NormalizeStrategy = normalize::None>
-    CFWS(NormalizeStrategy normalize_tag = NormalizeStrategy{}) : fws(normalize_tag) {
+    template<typename Tag = traits::whitespaces::Default>
+    CFWS(Tag tag = Tag{}) : fws(tag) {
         this->name("cwfs (commented folding whitespace)");
         static_cast<typename CFWS::this_type&>(*this) %= fws;
     }

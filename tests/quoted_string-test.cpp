@@ -20,8 +20,8 @@ INSTANTIATE_TEST_CASE_P(full_consume,
             SParserParams{"\"abc\"", "abc"},
 
             SParserParams{"\" a b c \""   , " a b c "},
-            SParserParams{"\"\r\n abc \"" , "\r\n abc "},  // take_inner_fws
-            SParserParams{"\"a\\\\\\\"b\"", "a\\\"b"}
+            SParserParams{"\"\r\n abc \"" , " abc "  },  // take_inner_fws
+            SParserParams{"\"a\\\\\\\"b\"", "a\\\"b" }
         )
 );
 

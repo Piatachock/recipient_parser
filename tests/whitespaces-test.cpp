@@ -21,7 +21,7 @@ INSTANTIATE_TEST_CASE_P(full_consume_full_result,
             "\t"     // only tab
         )
 );
-/*
+
 INSTANTIATE_TEST_CASE_P(full_consume_remove_crlf,
         SuccessFWSTest, ::testing::Values(
             SParserParams{" \r\n\t", " \t"},    // spaces and tabs before CRLF
@@ -30,11 +30,11 @@ INSTANTIATE_TEST_CASE_P(full_consume_remove_crlf,
             SParserParams{"\n "    , " "}       // only LF (non-RFC but probably useful)
         )
 );
-*/
+
 INSTANTIATE_TEST_CASE_P(partial_consume,
         SuccessFWSTest, ::testing::Values(
-            SParserParams{" \r\n"     , " "    , "\r\n" },  // stops on trailing CRLF
-            SParserParams{"\r\n \r\n ", "\r\n ", "\r\n "}   // stops on second CRLF
+            SParserParams{" \r\n"     , " ", "\r\n" },  // stops on trailing CRLF
+            SParserParams{"\r\n \r\n ", " ", "\r\n "}   // stops on second CRLF
         )
 );
 
