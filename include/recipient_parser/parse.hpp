@@ -14,8 +14,9 @@ namespace rcpt_parser {
 template<typename Iterator>
 boost::optional<types::Mailbox> parse_mailbox(Iterator& iter, const Iterator& end)
 {
+    static const Mailbox<Iterator> rule;
     types::Mailbox result;
-    if( qi::parse(iter, end, Mailbox<Iterator>(), result) ) {
+    if( qi::parse(iter, end, rule, result) ) {
         return std::move(result);
     }
     return {};
@@ -38,8 +39,9 @@ boost::optional<types::Mailbox> parse_mailbox(const Range& range) {
 template<typename Iterator>
 boost::optional<types::Address> parse_address(Iterator& iter, const Iterator& end)
 {
+    static const Address<Iterator> rule;
     types::Address result;
-    if( qi::parse(iter, end, Address<Iterator>(), result) ) {
+    if( qi::parse(iter, end, rule, result) ) {
         return std::move(result);
     }
     return {};
@@ -62,8 +64,9 @@ boost::optional<types::Address> parse_address(const Range& range) {
 template<typename Iterator>
 boost::optional<types::AddressList> parse_address_list(Iterator& iter, const Iterator& end)
 {
+    static const AddressList<Iterator> rule;
     types::AddressList result;
-    if( qi::parse(iter, end, AddressList<Iterator>(), result) ) {
+    if( qi::parse(iter, end, rule, result) ) {
         return std::move(result);
     }
     return {};
