@@ -8,7 +8,7 @@ namespace rcpt_parser {
 
 namespace spirit = boost::spirit;
 namespace qi = spirit::qi;
-namespace ascii = qi::ascii;
+namespace standard = qi::standard;
 namespace phx = boost::phoenix;
 
 } // namespace rcpt_parser

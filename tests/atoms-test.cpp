@@ -36,4 +36,9 @@ TEST_F(FailDotAtomTest, fails_on_leading_dot) {
     this->test_parser_fails(&parse_dot_atom, SParserParams{".string"});
 }
 
+TEST_F(FailDotAtomTest, fails_on_non_ascii) {
+    this->test_parser_fails(&parse_dot_atom, SParserParams{"\xd0\xae\xd0\xa2\xd0\xa4"}); //UTF-8 cyrillic
+    this->test_parser_fails(&parse_dot_atom, SParserParams{"\xde\xd2\xd4"});             //CP1251 cyrillic
+}
+
 }
